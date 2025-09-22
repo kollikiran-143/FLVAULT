@@ -966,6 +966,11 @@ public class DetectBankServiceImpl implements DetectBankService {
 			if (matcher.find()) {
 				return "UNION_3";
 			}
+			pattern = Pattern.compile("UNION\\s*BANK\\s*OF\\s*INDIA");
+			matcher = pattern.matcher(pdfText);
+			if (matcher.find()) {
+				return "UNION_5";
+			}
 			break;
 		}
 		}

@@ -299,6 +299,10 @@ public class StmtServiceImpl implements StmtService {
 						bankStmtInfo = unionService.parseUNION4(request);
 						break;
 					}
+					case "UNION_5": {
+						bankStmtInfo = unionService.parseUNION5(request);
+						break;
+					}
 					case "INDALH_1": {
 						bankStmtInfo = indalhService.parseINDALH1(request);
 						break;
