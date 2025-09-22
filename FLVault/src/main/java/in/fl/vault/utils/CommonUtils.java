@@ -42,7 +42,7 @@ public class CommonUtils {
 	}
 
 	public static String extractTextFromPdf(String filePath, String layout) throws IOException, InterruptedException, FileNotFoundException {
-		log.info("CommonUtils extractTextFromPdf filePath : " + filePath + ", layout : " + layout);
+		log.info("CommonUtils extractTextFromPdf FilePath : " + filePath + ", Layout : " + layout);
 		File pdfFile = new File(filePath);
 		float charWidth = Float.parseFloat(layout);
 		PDDocument doc = null;
