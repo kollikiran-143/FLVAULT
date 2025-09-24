@@ -511,6 +511,10 @@ public class StmtServiceImpl implements StmtService {
 						bankStmtInfo = bobService.parseBOB4(request);
 						break;
 					}
+					case "BOB_5": {
+						bankStmtInfo = bobService.parseBOB5(request);
+						break;
+					}
 					case "PNB_1": {
 						bankStmtInfo = pnbService.parsePNB1(request);
 						break;
