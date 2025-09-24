@@ -34,6 +34,7 @@ public class ParseBankStmtController {
 			response.setStatusMessage("Please provide all the details.");
 		}else {
 			response = stmtService.parseStatement(request);
+			
 		}
 		log.info("ParseBankStmtController parseBankStatement Response: " + response);
 		MDC.remove("CustomerId");
