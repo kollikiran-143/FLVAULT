@@ -16,9 +16,9 @@ import in.fl.vault.response.Transaction;
 import in.fl.vault.utils.CommonUtils;
 
 @Service
-public class BOBServiceImpl implements BOBService{
+public class BOBServiceImpl implements BOBService {
 	private static final Logger log = Logger.getLogger(StmtServiceImpl.class);
-	
+
 	@Override
 	public BSInfo parseBOB1(ParseBankStmtRequestDTO request) throws IOException {
 		long startTimeInMillis = System.currentTimeMillis();
@@ -31,7 +31,7 @@ public class BOBServiceImpl implements BOBService{
 			String pdfText = CommonUtils.extractTextFromPdf(filepath, "3");
 			Pattern txnPattern = Pattern.compile("(.*)\\n{1}(\\s*\\d{1,}\\s*\\d{2}-\\d{2}-\\d{4}.*\\n)");
 			Matcher txnMatcher = txnPattern.matcher(pdfText);
-			
+
 			String accountNo = CommonUtils.extractField(pdfText, "Account\\s*Number.*\\n\\s+(\\w+)").trim();
 			bsInfo.setAccountNo(accountNo);
 			bsInfo.setAccountType(CommonUtils.extractField(pdfText, "Account\\s*Type.*\\n\\s+(\\w+)").trim());
@@ -41,13 +41,14 @@ public class BOBServiceImpl implements BOBService{
 			bsInfo.setBranch(CommonUtils.extractMultiLinesField(pdfText, "Branch\\s*Name.*\\n([\\s\\S]*?)\\n.*IFSC", 90, 190));
 			String dateFormat = "dd-MM-yyyy";
 			String[] period = CommonUtils.extractMultiGroupArray(pdfText, "Account\\s*Statement.*?(\\d{2}-\\d{2}-\\d{4}).*(\\d{2}-\\d{2}-\\d{4})");
-			if(period != null) {
+			if (period != null) {
 				bsInfo.setStartDate(CommonUtils.dateFormatter(period[0].trim(), dateFormat));
 				bsInfo.setEnDate(CommonUtils.dateFormatter(period[1].trim(), dateFormat));
 			}
 
 			List<String> regions = new ArrayList<>();
-			if(txnMatcher.find()) {}
+			if (txnMatcher.find()) {
+			}
 			while (txnMatcher.find()) {
 				regions.add(txnMatcher.group());
 			}
@@ -58,39 +59,39 @@ public class BOBServiceImpl implements BOBService{
 				String debit = "";
 				String credit = "";
 				String balance = "";
-				String valueDate="";
+				String valueDate = "";
 				Transaction transaction = new Transaction();
-				
-				String []listlist=region.split("\\n");
-				for(int i=0;i<=listlist.length-1;i++){
-	        	   String line=listlist[i];
-	        	   if(i==1){
-	        		   if(line.length()<171){
-	        			   log.error("Region length is insufficient for full extraction."+ region);
-	        			   continue;
-	        		   }
-	        		   date = line.substring(15, 31).trim();
-		           	   valueDate=line.substring(32,47).trim();
-		           	   description+= line.substring(47, 106).trim();
-		           	   debit+=line.substring(128,149).trim();
-		           	   credit+= line.substring(149, 171).trim();
-		           	   balance+= line.substring(171).trim();  
-		    	   }else {
-		    		  description+= line.trim();
-		    	   }
+
+				String[] listlist = region.split("\\n");
+				for (int i = 0; i <= listlist.length - 1; i++) {
+					String line = listlist[i];
+					if (i == 1) {
+						if (line.length() < 171) {
+							log.error("Region length is insufficient for full extraction." + region);
+							continue;
+						}
+						date = line.substring(15, 31).trim();
+						valueDate = line.substring(32, 47).trim();
+						description += line.substring(47, 106).trim();
+						debit += line.substring(128, 149).trim();
+						credit += line.substring(149, 171).trim();
+						balance += line.substring(171).trim();
+					} else {
+						description += line.trim();
+					}
 				}
-		        if(credit.length()>0 && !credit.equalsIgnoreCase("-")){
-		    	    transaction.setTxnType("CREDIT");
-		    	    transaction.setAmount(credit);
-		        } else {
-		        	transaction.setAmount(debit);
-		    	    transaction.setTxnType("DEBIT");
-		        }
-		        transaction.setCredit(credit.equalsIgnoreCase("-") ? "" : credit);
+				if (credit.length() > 0 && !credit.equalsIgnoreCase("-")) {
+					transaction.setTxnType("CREDIT");
+					transaction.setAmount(credit);
+				} else {
+					transaction.setAmount(debit);
+					transaction.setTxnType("DEBIT");
+				}
+				transaction.setCredit(credit.equalsIgnoreCase("-") ? "" : credit);
 				transaction.setDebit(debit.equalsIgnoreCase("-") ? "" : debit);
-	         	transaction.setsNo(String.valueOf(serialNoCount++));
-	         	String txnDateFormat = "dd-MM-yyyy";
-	            transaction.setValueDate(CommonUtils.dateFormatter(valueDate, txnDateFormat));
+				transaction.setsNo(String.valueOf(serialNoCount++));
+				String txnDateFormat = "dd-MM-yyyy";
+				transaction.setValueDate(CommonUtils.dateFormatter(valueDate, txnDateFormat));
 				transaction.setTxnDate(CommonUtils.dateFormatter(date, txnDateFormat));
 				transaction.setBalance(balance);
 				transaction.setAccNo(accountNo);
@@ -98,7 +99,7 @@ public class BOBServiceImpl implements BOBService{
 				transactions.add(transaction);
 			}
 			bsInfo.setTransactions(transactions);
-		}catch (Exception e) {
+		} catch (Exception e) {
 //			e.printStackTrace();
 			log.error("Error in BOBServiceImpl parseBOB1:", e);
 		}
@@ -107,7 +108,7 @@ public class BOBServiceImpl implements BOBService{
 		log.info("Time Taken for BOBServiceImpl parseBOB1 is ==>" + timeTaken);
 		return bsInfo;
 	}
-	
+
 	@Override
 	public BSInfo parseBOB2(ParseBankStmtRequestDTO request) throws IOException {
 		long startTimeInMillis = System.currentTimeMillis();
@@ -118,35 +119,34 @@ public class BOBServiceImpl implements BOBService{
 		String filepath = request.getFileName();
 		try {
 			String pdfText = CommonUtils.extractTextFromPdf(filepath, "4");
-			Pattern txnPattern = Pattern
-						.compile("^(\\s*?\\d{2}/\\d{2}/\\d{4}[\\s\\S]*?)(?=\\s*Date|\\s*\\d{2}/\\d{2}/\\d{4})", Pattern.MULTILINE);
+			Pattern txnPattern = Pattern.compile("^(\\s*?\\d{2}/\\d{2}/\\d{4}[\\s\\S]*?)(?=\\s*Date|\\s*\\d{2}/\\d{2}/\\d{4})", Pattern.MULTILINE);
 			Matcher txnMatcher = txnPattern.matcher(pdfText);
 
-			bsInfo.setAccountNo(CommonUtils.extractField(pdfText, "Account\\s*No\\s*:\\s*(.*)").trim()); 
+			bsInfo.setAccountNo(CommonUtils.extractField(pdfText, "Account\\s*No\\s*:\\s*(.*)").trim());
 			bsInfo.setBranch(CommonUtils.extractField(pdfText, "Branch\\s*Name\\s*:\\s*(.*)").replaceAll("\\s+", " "));
-			bsInfo.setIfsc(CommonUtils.extractField(pdfText, "IFSC\\s*Code\\s*:\\s*(BARB\\w{7})"));  
+			bsInfo.setIfsc(CommonUtils.extractField(pdfText, "IFSC\\s*Code\\s*:\\s*(BARB\\w{7})"));
 			String[] period = CommonUtils.extractMultiGroupArray(pdfText, "Period\\s*from\\s*(\\d{2}/\\d{2}/\\d{4})\\s*to\\s*(\\d{2}/\\d{2}/\\d{4})");
 			String dateFormat = "dd/MM/yyyy";
-			if(period != null && period.length==2){
+			if (period != null && period.length == 2) {
 				bsInfo.setStartDate(CommonUtils.dateFormatter(period[0].trim(), dateFormat));
 				bsInfo.setEnDate(CommonUtils.dateFormatter(period[1].trim(), dateFormat));
 			}
-            
-			String name="";
-			for(int i=0;i<pdfText.length();i++){
-				char ch=pdfText.charAt(i);
-				if(ch=='\n'){
+
+			String name = "";
+			for (int i = 0; i < pdfText.length(); i++) {
+				char ch = pdfText.charAt(i);
+				if (ch == '\n') {
 					break;
 				}
-				name+=ch;
+				name += ch;
 			}
 			bsInfo.setName(name.replaceAll("\\s+", " ").trim());
-			
-			int position=pdfText.indexOf("Customer");
-			String address=pdfText.substring(0, position);
-			address=address.replaceAll(name, "").replaceAll("\\n", "").replaceAll("\\s+", " ");
-		    bsInfo.setAddress(address.replaceAll("\\s+", " ").trim());
-			
+
+			int position = pdfText.indexOf("Customer");
+			String address = pdfText.substring(0, position);
+			address = address.replaceAll(name, "").replaceAll("\\n", "").replaceAll("\\s+", " ");
+			bsInfo.setAddress(address.replaceAll("\\s+", " ").trim());
+
 			List<String> regions = new ArrayList<>();
 			while (txnMatcher.find()) {
 				regions.add(txnMatcher.group());
@@ -158,63 +158,63 @@ public class BOBServiceImpl implements BOBService{
 				String debit = "";
 				String credit = "";
 				String balance = "";
-				String valueDate="";
+				String valueDate = "";
 				Transaction transaction = new Transaction();
-				
-				String[] listlist=region.split("\\n");
-			
-				for(int i=0;i<=listlist.length-1;i++){
-	        	   String line=listlist[i];
-	        	   int len=line.length();
-	        	   if(len>0){
-	        		   if(len>20)
-	        			   date+= line.substring(0, 20).trim();
-	        		   else 
-	        			   date+= line.substring(0).trim();
-	        	   }
-	        	   if(len>20){
-	        		   if(len>84)
-	        			   description+= line.substring(20, 84).trim();
-	        		   else
-	        			   description+= line.substring(20).trim();
-	        	   }
-	        	   if(len>84){
-	        		   if(len>141)
-	        			   debit+= line.substring(84,141).trim();
-	        		   else 
-	        			   debit+= line.substring(84).trim();
-	        	   }
-	        	   if(len>141){
-	        		   if(len>169)
-	        			   credit+= line.substring(141,169).trim();
-	        		   else 
-	        			   credit+= line.substring(141).trim();
-	        	   }
-	        	   if(len>169){
-		           	   balance+= line.substring(169).trim();
-	        	   }
+
+				String[] listlist = region.split("\\n");
+
+				for (int i = 0; i <= listlist.length - 1; i++) {
+					String line = listlist[i];
+					int len = line.length();
+					if (len > 0) {
+						if (len > 20)
+							date += line.substring(0, 20).trim();
+						else
+							date += line.substring(0).trim();
+					}
+					if (len > 20) {
+						if (len > 84)
+							description += line.substring(20, 84).trim();
+						else
+							description += line.substring(20).trim();
+					}
+					if (len > 84) {
+						if (len > 141)
+							debit += line.substring(84, 141).trim();
+						else
+							debit += line.substring(84).trim();
+					}
+					if (len > 141) {
+						if (len > 169)
+							credit += line.substring(141, 169).trim();
+						else
+							credit += line.substring(141).trim();
+					}
+					if (len > 169) {
+						balance += line.substring(169).trim();
+					}
 				}
-		       	if(credit.length()>0 && !credit.equalsIgnoreCase("-")){
-		       		transaction.setAmount(credit);
+				if (credit.length() > 0 && !credit.equalsIgnoreCase("-")) {
+					transaction.setAmount(credit);
 					transaction.setTxnType("CREDIT");
 				} else {
 					transaction.setAmount(debit);
 					transaction.setTxnType("DEBIT");
 				}
-	         	transaction.setsNo(String.valueOf(serialNoCount++));
-	         	String txnDateFormat = "dd/MM/yyyy";
-	         	balance = balance.replaceAll("C|r", "");
-	         	transaction.setTxnDate(CommonUtils.dateFormatter(date, txnDateFormat));
-	         	transaction.setValueDate(CommonUtils.dateFormatter(valueDate, txnDateFormat));
+				transaction.setsNo(String.valueOf(serialNoCount++));
+				String txnDateFormat = "dd/MM/yyyy";
+				balance = balance.replaceAll("C|r", "");
+				transaction.setTxnDate(CommonUtils.dateFormatter(date, txnDateFormat));
+				transaction.setValueDate(CommonUtils.dateFormatter(valueDate, txnDateFormat));
 				transaction.setBalance(balance);
 				transaction.setCredit(credit);
 				transaction.setDebit(debit);
 				transaction.setAccNo(bsInfo.getAccountNo());
-				transaction.setDescription(description.replaceAll("\\s+"," ").trim());
+				transaction.setDescription(description.replaceAll("\\s+", " ").trim());
 				transactions.add(transaction);
 			}
 			bsInfo.setTransactions(transactions);
-		}catch (Exception e) {
+		} catch (Exception e) {
 //			e.printStackTrace();
 			log.error("Error in BOBServiceImpl parseBOB2:", e);
 		}
@@ -223,7 +223,7 @@ public class BOBServiceImpl implements BOBService{
 		log.info("Time Taken for BOBServiceImpl parseBOB2 is ==>" + timeTaken);
 		return bsInfo;
 	}
-	
+
 	@Override
 	public BSInfo parseBOB3(ParseBankStmtRequestDTO request) throws IOException {
 		long startTimeInMillis = System.currentTimeMillis();
@@ -236,10 +236,8 @@ public class BOBServiceImpl implements BOBService{
 			String pdfText = CommonUtils.extractTextFromPdf(filePath, "4");
 
 			bankStatementInfo.setIfsc(CommonUtils.extractField(pdfText, "IFSC[\\s\\S]*?(BARB\\w{7})"));
-			String[] accountArray = CommonUtils.extractMultiGroupArray(pdfText,
-					"Statement\\s*of\\s*transactions\\s*in\\s*(.*?)(\\d+)");
-			String addressRegion = CommonUtils.extractField(pdfText,
-					"([\\s\\S]*?)(?=\\s*Your\\s*Account\\s*Statement)");
+			String[] accountArray = CommonUtils.extractMultiGroupArray(pdfText, "Statement\\s*of\\s*transactions\\s*in\\s*(.*?)(\\d+)");
+			String addressRegion = CommonUtils.extractField(pdfText, "([\\s\\S]*?)(?=\\s*Your\\s*Account\\s*Statement)");
 			String[] addressLine = addressRegion.split("\\n");
 			String name = "";
 			String address = "";
@@ -266,8 +264,7 @@ public class BOBServiceImpl implements BOBService{
 				bankStatementInfo.setAccountNo(accountArray[1].trim());
 			}
 			String dateFormat = "MMMddyyyy";
-			String[] period = CommonUtils.extractMultiGroupArray(pdfText,
-					"Statement\\s*Period.*?(\\w{3}\\s*\\d{2}\\s*,\\s*\\d{4})\\s*to\\s*(\\w{3}\\s*\\d{2}\\s*,\\s*\\d{4})");
+			String[] period = CommonUtils.extractMultiGroupArray(pdfText, "Statement\\s*Period.*?(\\w{3}\\s*\\d{2}\\s*,\\s*\\d{4})\\s*to\\s*(\\w{3}\\s*\\d{2}\\s*,\\s*\\d{4})");
 			if (period != null && period.length >= 2) {
 				String startdate = period[0].replaceAll(",|\\s*", "");
 				String enddate = period[1].replaceAll(",|\\s*", "");
@@ -296,13 +293,10 @@ public class BOBServiceImpl implements BOBService{
 		String filepath = request.getFileName();
 		try {
 			String pdfText = CommonUtils.extractTextFromPdf(filepath, "5");
-			Pattern txnPattern = Pattern.compile(
-					"^(\\s*?\\d{2}/\\d{2}/\\d{4}\\s*?\\d{2}/\\d{2}/\\d{4}[\\s\\S]*?)(?=\\s*Date|\\s*\\d{2}/\\d{2}/\\d{4})",
-					Pattern.MULTILINE);
+			Pattern txnPattern = Pattern.compile("^(\\s*?\\d{2}/\\d{2}/\\d{4}\\s*?\\d{2}/\\d{2}/\\d{4}[\\s\\S]*?)(?=\\s*Date|\\s*\\d{2}/\\d{2}/\\d{4})", Pattern.MULTILINE);
 			Matcher txnMatcher = txnPattern.matcher(pdfText);
 
-			String[] period = CommonUtils.extractMultiGroupArray(pdfText,
-					"Statement\\s*Period\\s*from\\s*(\\d{2}/\\d{2}/\\d{4})\\s*to\\s*(\\d{2}/\\d{2}/\\d{4})");
+			String[] period = CommonUtils.extractMultiGroupArray(pdfText, "Statement\\s*Period\\s*from\\s*(\\d{2}/\\d{2}/\\d{4})\\s*to\\s*(\\d{2}/\\d{2}/\\d{4})");
 			String dateFormat = "dd/MM/yyyy";
 			if (period != null && period.length == 2) {
 				bsInfo.setStartDate(CommonUtils.dateFormatter(period[0].trim(), dateFormat));
@@ -314,7 +308,7 @@ public class BOBServiceImpl implements BOBService{
 
 			Pattern addressPatter = Pattern.compile("Address\\s*:([\\s\\S]*?)(?=\\s*Account\\s*No)", Pattern.MULTILINE);
 			Matcher addressMatcher = addressPatter.matcher(pdfText);
-			
+
 			bsInfo.setName(CommonUtils.extractField(pdfText, "Account\\s*Holder\\s*Name\\s*:(.*)Add").replaceAll("\\s+", " ").trim());
 
 			String address = "";
@@ -414,16 +408,14 @@ public class BOBServiceImpl implements BOBService{
 		log.info("Time Taken for BOBServiceImpl parseBOB4 is ==>" + timeTaken);
 		return bsInfo;
 	}
-	
+
 	private List<Transaction> extractTransactionsBOB_3(String pdfText, String accountNo) throws IOException {
 		List<Transaction> transactions = new ArrayList<>();
 		try {
 			Pattern removePattern = Pattern.compile("^\\s*Page[\\s\\S]*?BALANCE", Pattern.MULTILINE);
 			Matcher removeMatcher = removePattern.matcher(pdfText);
 			pdfText = removeMatcher.replaceAll("");
-			Pattern pattern = Pattern.compile(
-					"(^\\s{0,14}\\d{2}-\\d{2}-\\d{4}[\\s\\S]*?)(?=^\\s*\\d{2}-\\d{2}-\\d{4}|^\\s*Page|^\\s*\\d{2}-\\d{2}-\\d{4}\\s*ClosingBalance)",
-					Pattern.MULTILINE);
+			Pattern pattern = Pattern.compile("(^\\s{0,14}\\d{2}-\\d{2}-\\d{4}[\\s\\S]*?)(?=^\\s*\\d{2}-\\d{2}-\\d{4}|^\\s*Page|^\\s*\\d{2}-\\d{2}-\\d{4}\\s*ClosingBalance)", Pattern.MULTILINE);
 			int serialNoCount = 1;
 			Matcher matcher = pattern.matcher(pdfText);
 			String firstLine = "";
@@ -457,8 +449,8 @@ public class BOBServiceImpl implements BOBService{
 						txnDate = lines[0].substring(0, 11).trim();
 						description += lines[0].substring(11, 66).trim();
 						if (lines[0].substring(11, 66).trim().equalsIgnoreCase("ClosingBalance")) {
-                            break;
-                        }
+							break;
+						}
 						credit = lines[0].substring(94, 116).trim();
 						debit = lines[0].substring(72, 94).trim();
 						balance = lines[0].substring(116).trim();
@@ -505,6 +497,66 @@ public class BOBServiceImpl implements BOBService{
 		} catch (Exception e) {
 //			e.printStackTrace();
 			log.error("Error in BOBServiceImpl extractTransactionsBOB_3: ", e);
+		}
+		return transactions;
+	}
+
+	@Override
+	public BSInfo parseBOB5(ParseBankStmtRequestDTO request) throws IOException {
+		long startTimeInMillis = System.currentTimeMillis();
+		log.info("Entering BOBServiceImpl parseBOB5 with request: " + request);
+
+		BSInfo bankStatementInfo = new BSInfo();
+		String filePath = request.getFileName();
+
+		try {
+			String text = CommonUtils.extractTextFromPdf(filePath, "3");
+			bankStatementInfo.setAccountNo(CommonUtils.extractField(text, "A\\/C\\s*Number\\s*:\\s*(\\S*)"));
+			bankStatementInfo.setIfsc(CommonUtils.extractField(text, "IFSC\\s*CODE:\\s*(\\S*)"));
+			String address = CommonUtils.extractField(text, "Address\\s*:\\s*([\\s\\S]*?)\\n\\s*City") + " " + CommonUtils.extractField(text, "City\\s*:\\s*(.*)\\n");
+			bankStatementInfo.setAddress(address.replaceAll("\\s+", " ").trim());
+			bankStatementInfo.setName(CommonUtils.extractField(text, "A\\/C\\s*Name\\s*:\\s*(.*)").replaceAll("\\s+", " ").trim());
+			bankStatementInfo.setStartDate(CommonUtils.dateFormatter(CommonUtils.extractField(text, "period\\s*of\\s*(\\d{2}-\\d{2}-\\d{4})"), "dd-MM-yyyy"));
+			bankStatementInfo.setEnDate(CommonUtils.dateFormatter(CommonUtils.extractField(text, "period\\s*of\\s*.*?to\\s*(\\d{2}-\\d{2}-\\d{4})"), "dd-MM-yyyy"));
+
+			String dateFormat = "dd-MM-yy";
+			bankStatementInfo.setTransactions(extractTransactionsBOB_5(text, bankStatementInfo.getAccountNo(), dateFormat));
+		} catch (Exception e) {
+//			e.printStackTrace();
+			log.error("Error in BOBServiceImpl parseBOB5: " + e);
+		}
+
+		log.info("Exiting BOBServiceImpl parseBOB5: " + bankStatementInfo);
+		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
+		log.info("Time Taken for BOBServiceImpl parseBOB5 is ==>" + timeTaken);
+		return bankStatementInfo;
+	}
+
+	private List<Transaction> extractTransactionsBOB_5(String pdfText, String accountNo, String dateFormat) throws IOException {
+		List<Transaction> transactions = new ArrayList<>();
+
+		Pattern pattern = Pattern.compile("(\\d{2}-\\d{2}-\\d{2})\\s+(.*?)\\s+([\\d,]+\\.\\d{2})(\\s+)([\\d,]+\\.\\d{2})Cr");
+		Matcher matcher = pattern.matcher(pdfText);
+		int serialNoCount = 1;
+
+		while (matcher.find()) {
+			Transaction transaction = new Transaction();
+			transaction.setsNo(String.valueOf(serialNoCount++));
+			transaction.setTxnDate(CommonUtils.dateFormatter(matcher.group(1), dateFormat));
+			transaction.setDescription(matcher.group(2).replaceAll("\\s+", " ").trim());
+			transaction.setAmount(matcher.group(3));
+			if (matcher.group(4).length() > 15) {
+				transaction.setDebit(transaction.getAmount());
+				transaction.setCredit("");
+				transaction.setTxnType("DEBIT");
+			} else {
+				transaction.setDebit("");
+				transaction.setCredit(transaction.getAmount());
+				transaction.setTxnType("CREDIT");
+			}
+			transaction.setBalance(matcher.group(5));
+			transaction.setAccNo(accountNo);
+			transactions.add(transaction);
 		}
 		return transactions;
 	}

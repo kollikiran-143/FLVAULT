@@ -292,6 +292,11 @@ public class DetectBankServiceImpl implements DetectBankService {
 				}
 				return "BOB_2";
 			}
+			pattern = Pattern.compile("IFSC\\s*CODE:\\s*BARB");
+			matcher = pattern.matcher(pdfText);
+			if (matcher.find()) {
+				return "BOB_5";
+			}
 			pattern = Pattern.compile("IFSC[\\s\\S]*?BARB\\w{7}");
 			matcher = pattern.matcher(pdfText);
 			if (matcher.find() || pdfText.contains("https://www.bankofbaroda.in")) {
@@ -965,6 +970,11 @@ public class DetectBankServiceImpl implements DetectBankService {
 			matcher = pattern.matcher(pdfText);
 			if (matcher.find()) {
 				return "UNION_3";
+			}
+			pattern = Pattern.compile("UNION\\s*BANK\\s*OF\\s*INDIA");
+			matcher = pattern.matcher(pdfText);
+			if (matcher.find()) {
+				return "UNION_5";
 			}
 			break;
 		}

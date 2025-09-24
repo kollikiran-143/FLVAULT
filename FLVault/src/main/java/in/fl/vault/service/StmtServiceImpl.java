@@ -299,6 +299,10 @@ public class StmtServiceImpl implements StmtService {
 						bankStmtInfo = unionService.parseUNION4(request);
 						break;
 					}
+					case "UNION_5": {
+						bankStmtInfo = unionService.parseUNION5(request);
+						break;
+					}
 					case "INDALH_1": {
 						bankStmtInfo = indalhService.parseINDALH1(request);
 						break;
@@ -505,6 +509,10 @@ public class StmtServiceImpl implements StmtService {
 					}
 					case "BOB_4": {
 						bankStmtInfo = bobService.parseBOB4(request);
+						break;
+					}
+					case "BOB_5": {
+						bankStmtInfo = bobService.parseBOB5(request);
 						break;
 					}
 					case "PNB_1": {
