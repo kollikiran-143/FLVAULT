@@ -6,10 +6,12 @@ import in.fl.vault.request.ParseBankStmtRequestDTO;
 import in.fl.vault.response.BSInfo;
 
 public interface IOBService {
-	
+
 	public BSInfo parseIOB1(ParseBankStmtRequestDTO request) throws IOException;
-	
+
 	public BSInfo parseIOB2(ParseBankStmtRequestDTO request) throws IOException;
 
-	public BSInfo parseIOB3(ParseBankStmtRequestDTO request);
+	public BSInfo parseIOB3(ParseBankStmtRequestDTO request) throws IOException;
+
+	public BSInfo parseIOB4(ParseBankStmtRequestDTO request) throws IOException;
 }
