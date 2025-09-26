@@ -57,7 +57,7 @@ public class UJVNServiceImpl implements UJVNService{
 //			e.printStackTrace();
 			log.error("Error in UJVNServiceImpl parseUJVN1: " + e);
 		}
-		log.info("Exiting UJVNServiceImpl parseUJVN1: " + bankStatementInfo);
+		log.info("Exiting UJVNServiceImpl parseUJVN1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for UJVNServiceImpl parseUJVN1 is ==>" + timeTaken);
 		return bankStatementInfo;

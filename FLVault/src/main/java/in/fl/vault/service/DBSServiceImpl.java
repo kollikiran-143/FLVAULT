@@ -48,7 +48,7 @@ public class DBSServiceImpl implements DBSService{
 	        log.error("Error in DBSServiceImpl parseDBS1: ", e);
 	    }
 
-	    log.info("Exiting DBSServiceImpl parseDBS1: " + bankStatementInfo);
+	    log.info("Exiting DBSServiceImpl parseDBS1: " + bankStatementInfo.printWithoutTrxs());
 	    long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 	    log.info("Time Taken for DBSServiceImpl parseDBS1 is ==> " + timeTaken);
 	    return bankStatementInfo;
@@ -84,7 +84,7 @@ public class DBSServiceImpl implements DBSService{
 	        log.error("Error in DBSServiceImpl parseDBS2: ", e);
 	    }
 
-	    log.info("Exiting DBSServiceImpl parseDBS2: " + bankStatementInfo);
+	    log.info("Exiting DBSServiceImpl parseDBS2: " + bankStatementInfo.printWithoutTrxs());
 	    long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 	    log.info("Time Taken for DBSServiceImpl parseDBS2 is ==> " + timeTaken);
 	    return bankStatementInfo;
@@ -120,7 +120,7 @@ public class DBSServiceImpl implements DBSService{
 //        	e.printStackTrace();
 	        log.error("Error in DBSServiceImpl parseDBS3: ", e);
 	    }
-	    log.info("Exiting DBSServiceImpl parseDBS3: " + bankStatementInfo);
+	    log.info("Exiting DBSServiceImpl parseDBS3: " + bankStatementInfo.printWithoutTrxs());
 	    long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 	    log.info("Time Taken for DBSServiceImpl parseDBS3 is ==> " + timeTaken);
 	    return bankStatementInfo;

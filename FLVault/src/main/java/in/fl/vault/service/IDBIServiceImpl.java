@@ -63,7 +63,7 @@ public class IDBIServiceImpl implements IDBIService{
 //        	e.printStackTrace();
 			log.error("Error in IDBIServiceImpl parseIDBI1: ", e);
 		}
-		log.info("Exiting IDBIServiceImpl parseIDBI1: " + bankStatementInfo);
+		log.info("Exiting IDBIServiceImpl parseIDBI1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IDBIServiceImpl parseIDBI1 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -95,7 +95,7 @@ public class IDBIServiceImpl implements IDBIService{
 //			e.printStackTrace();
 			log.error("Error in IDBIServiceImpl parseIDBI2 :", e);
 		}
-		log.info("Exiting IDBIServiceImpl parseIDBI2: " + bankStatementInfo);
+		log.info("Exiting IDBIServiceImpl parseIDBI2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IDBIServiceImpl parseIDBI2 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -139,7 +139,7 @@ public class IDBIServiceImpl implements IDBIService{
 //           	e.printStackTrace();
         	log.error("Error in IDBIServiceImpl parseIDBI3: "+e);
         }
-        log.info("Exiting IDBIServiceImpl parseIDBI3: " + bankStatementInfo);
+        log.info("Exiting IDBIServiceImpl parseIDBI3: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IDBIServiceImpl parseIDBI3 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -174,7 +174,7 @@ public class IDBIServiceImpl implements IDBIService{
 //           	e.printStackTrace();
         	log.error("Error in IDBIServiceImpl parseIDBI4: "+e);
         }
-        log.info("Exiting IDBIServiceImpl parseIDBI4: " + bankStatementInfo);
+        log.info("Exiting IDBIServiceImpl parseIDBI4: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IDBIServiceImpl parseIDBI4 is ==>" + timeTaken);
         return bankStatementInfo;

@@ -57,7 +57,7 @@ public class IDFCServiceImpl implements IDFCService{
         	log.error("Error in IDFCServiceImpl parseIDFC1: "+e);
         }
         
-        log.info("Exiting IDFCServiceImpl parseIDFC1: " + bankStatementInfo);
+        log.info("Exiting IDFCServiceImpl parseIDFC1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IDFCServiceImpl parseIDFC1 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -99,7 +99,7 @@ public class IDFCServiceImpl implements IDFCService{
 //        	e.printStackTrace();
         	log.error("Error in IDFCServiceImpl parseIDFC2: "+e);
         }
-        log.info("Exiting IDFCServiceImpl parseIDFC2: " + bankStatementInfo);
+        log.info("Exiting IDFCServiceImpl parseIDFC2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IDFCServiceImpl parseIDFC2 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -138,7 +138,7 @@ public class IDFCServiceImpl implements IDFCService{
 			log.error("Error in IDFCServiceImpl parseIDFC3: " + e);
 		}
 
-		log.info("Exiting IDFCServiceImpl parseIDFC3: " + bankStatementInfo);
+		log.info("Exiting IDFCServiceImpl parseIDFC3: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IDFCServiceImpl parseIDFC3 is ==>" + timeTaken);
 		return bankStatementInfo;

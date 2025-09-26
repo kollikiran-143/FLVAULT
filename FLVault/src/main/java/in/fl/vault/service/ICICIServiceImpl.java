@@ -81,7 +81,7 @@ public class ICICIServiceImpl implements ICICIService{
 //			e.printStackTrace();
 			log.error("Error in ICICIServiceImpl parseICICI1: " + e);
 		}
-		log.info("Exiting ICICIServiceImpl parseICICI1: " + bsInfo);
+		log.info("Exiting ICICIServiceImpl parseICICI1:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for ICICIServiceImpl parseICICI1 is ==>" + timeTaken);
 		return bsInfo;
@@ -115,7 +115,7 @@ public class ICICIServiceImpl implements ICICIService{
 			log.error("Error in ICICIServiceImpl parseICICI2: " + e);
 		}
 		
-		log.info("Exiting ICICIServiceImpl parseICICI2: " + bsInfo);
+		log.info("Exiting ICICIServiceImpl parseICICI2:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for ICICIServiceImpl parseICICI2 is ==>" + timeTaken);
 		return bsInfo;
@@ -154,7 +154,7 @@ public class ICICIServiceImpl implements ICICIService{
 			log.error("Error in ICICIServiceImpl parseICICI3: " + e);
 		}
 
-		log.info("Exiting ICICIServiceImpl parseICICI3: " + bsInfo);
+		log.info("Exiting ICICIServiceImpl parseICICI3:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for ICICIServiceImpl parseICICI3 is ==>" + timeTaken);
 		return bsInfo;
@@ -204,7 +204,7 @@ public class ICICIServiceImpl implements ICICIService{
 			log.error("Error in ICICIServiceImpl parseICICI4: " + e);
 		}
 		
-		log.info("Exiting ICICIServiceImpl parseICICI4: " + bsInfo);
+		log.info("Exiting ICICIServiceImpl parseICICI4:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for ICICIServiceImpl parseICICI4 is ==>" + timeTaken);
 		return bsInfo;

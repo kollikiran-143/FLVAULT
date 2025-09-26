@@ -48,7 +48,7 @@ public class CSBServiceImpl implements CSBService{
 			log.error("Error in CSBServiceImpl parseCSB1: ", e);
 		}
 
-		log.info("Exiting CSBServiceImpl parseCSB1: " + bankStatementInfo);
+		log.info("Exiting CSBServiceImpl parseCSB1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CSBServiceImpl is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -85,7 +85,7 @@ public class CSBServiceImpl implements CSBService{
 			log.error("Error in CSBServiceImpl parseCSB2: ", e);
 		}
 
-		log.info("Exiting CSBServiceImpl parseCSB2 : " + bankStatementInfo);
+		log.info("Exiting CSBServiceImpl parseCSB2 : " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CSBServiceImpl parseCSB2 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -109,7 +109,7 @@ public class CSBServiceImpl implements CSBService{
 			log.error("Error in CSBServiceImpl parseCSB3: ", e);
 		}
 
-		log.info("Exiting CSBServiceImpl parseCSB3: " + bankStatementInfo);
+		log.info("Exiting CSBServiceImpl parseCSB3: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CSBServiceImpl parseCSB3 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -153,7 +153,7 @@ public class CSBServiceImpl implements CSBService{
 			log.error("Error in CSBServiceImpl parseCSB4: " + e);
 		}
 
-		log.info("Exiting CSBServiceImpl parseCSB4: " + bankStatementInfo);
+		log.info("Exiting CSBServiceImpl parseCSB4: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CSBServiceImpl parseCSB4 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -214,7 +214,7 @@ public class CSBServiceImpl implements CSBService{
 			log.error("Error in CSBServiceImpl parseCSB5: " + e);
 		}
 
-		log.info("Exiting CSBServiceImpl parseCSB5: " + bankStatementInfo);
+		log.info("Exiting CSBServiceImpl parseCSB5: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CSBServiceImpl parseCSB5 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -275,7 +275,7 @@ public class CSBServiceImpl implements CSBService{
 			log.error("Error in CSBServiceImpl parseCSB6: " + e);
 		}
 
-		log.info("Exiting CSBServiceImpl parseCSB6: " + bankStatementInfo);
+		log.info("Exiting CSBServiceImpl parseCSB6: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CSBServiceImpl parseCSB6 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -329,7 +329,7 @@ public class CSBServiceImpl implements CSBService{
 			log.error("Error in CSBServiceImpl parseCSB7: " + e);
 		}
 
-		log.info("Exiting CSBServiceImpl parseCSB7: " + bankStatementInfo);
+		log.info("Exiting CSBServiceImpl parseCSB7: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CSBServiceImpl parseCSB7 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -391,7 +391,7 @@ public class CSBServiceImpl implements CSBService{
 			log.error("Error in CSBServiceImpl parseCSB8: " + e);
 		}
 
-		log.info("Exiting CSBServiceImpl parseCSB8: " + bankStatementInfo);
+		log.info("Exiting CSBServiceImpl parseCSB8: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CSBServiceImpl parseCSB8 is ==>" + timeTaken);
 		return bankStatementInfo;

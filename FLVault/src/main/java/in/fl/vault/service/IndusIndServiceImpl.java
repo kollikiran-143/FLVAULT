@@ -49,7 +49,7 @@ public class IndusIndServiceImpl implements IndusIndService{
         	log.error("Error in IndusIndServiceImpl parseIndusInd1: "+e);
         }
         
-        log.info("Exiting IndusIndServiceImpl parseIndusInd1: " + bankStatementInfo);
+        log.info("Exiting IndusIndServiceImpl parseIndusInd1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IndusIndServiceImpl parseIndusInd1 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -87,7 +87,7 @@ public class IndusIndServiceImpl implements IndusIndService{
         	log.error("Error in IndusIndServiceImpl parseIndusInd2: "+e);
         }
         
-        log.info("Exiting IndusIndServiceImpl parseIndusInd2: " + bankStatementInfo);
+        log.info("Exiting IndusIndServiceImpl parseIndusInd2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IndusIndServiceImpl parseIndusInd2 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -212,7 +212,7 @@ public class IndusIndServiceImpl implements IndusIndService{
         	log.error("Error in IndusIndServiceImpl parseIndusInd3: "+e);
         }
         
-        log.info("Exiting IndusIndServiceImpl parseIndusInd3: " + bsInfo);
+        log.info("Exiting IndusIndServiceImpl parseIndusInd3:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IndusIndServiceImpl parseIndusInd3 is ==>" + timeTaken);
         return bsInfo;
@@ -249,7 +249,7 @@ public class IndusIndServiceImpl implements IndusIndService{
         	log.error("Error in IndusIndServiceImpl parseIndusInd4: "+e);
         }
 
-        log.info("Exiting IndusIndServiceImpl parseIndusInd4: " + bankStatementInfo);
+        log.info("Exiting IndusIndServiceImpl parseIndusInd4: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IndusIndServiceImpl parseIndusInd4 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -351,7 +351,7 @@ public class IndusIndServiceImpl implements IndusIndService{
 //			e.printStackTrace();
         	log.error("Error in IndusIndServiceImpl parseIndusInd5: "+e);
         }
-        log.info("Exiting IndusIndServiceImpl parseIndusInd5: " + bsInfo);
+        log.info("Exiting IndusIndServiceImpl parseIndusInd5:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IndusIndServiceImpl parseIndusInd5 is ==>" + timeTaken);
         return bsInfo;
@@ -390,7 +390,7 @@ public class IndusIndServiceImpl implements IndusIndService{
 //			e.printStackTrace();
         	log.error("Error in IndusIndServiceImpl parseIndusInd5: "+e);
         }
-        log.info("Exiting IndusIndServiceImpl parseIndusInd5: " + bsInfo);
+        log.info("Exiting IndusIndServiceImpl parseIndusInd5:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IndusIndServiceImpl parseIndusInd5 is ==>" + timeTaken);
         return bsInfo;
@@ -422,7 +422,7 @@ public class IndusIndServiceImpl implements IndusIndService{
 //			e.printStackTrace();
         	log.error("Error in IndusIndServiceImpl parseIndusInd6: "+e);
         }
-        log.info("Exiting IndusIndServiceImpl parseIndusInd6: " + bsInfo);
+        log.info("Exiting IndusIndServiceImpl parseIndusInd6:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IndusIndServiceImpl parseIndusInd6 is ==>" + timeTaken);
         return bsInfo;
@@ -459,7 +459,7 @@ public class IndusIndServiceImpl implements IndusIndService{
         	log.error("Error in IndusIndServiceImpl parseIndusInd7: "+e);
         }
         
-        log.info("Exiting IndusIndServiceImpl parseIndusInd7: " + bankStatementInfo);
+        log.info("Exiting IndusIndServiceImpl parseIndusInd7: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IndusIndServiceImpl parseIndusInd7 is ==>" + timeTaken);
         return bankStatementInfo;

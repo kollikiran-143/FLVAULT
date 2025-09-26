@@ -53,7 +53,7 @@ public class BandhanServiceImpl implements BandhanService{
         	log.error("Error in BandhanServiceImpl parseBandhan1: "+e);
         }
         
-        log.info("Exiting BandhanServiceImpl parseBandhan1: " + bankStatementInfo);
+        log.info("Exiting BandhanServiceImpl parseBandhan1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for BandhanServiceImpl parseBandhan1 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -93,7 +93,7 @@ public class BandhanServiceImpl implements BandhanService{
         	log.error("Error in BandhanServiceImpl parseBandhan2: "+e);
         }
         
-        log.info("Exiting BandhanServiceImpl parseBandhan2: " + bankStatementInfo);
+        log.info("Exiting BandhanServiceImpl parseBandhan2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for BandhanServiceImpl parseBandhan2 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -129,7 +129,7 @@ public class BandhanServiceImpl implements BandhanService{
         	log.error("Error in BandhanServiceImpl parseBandhan3: "+e);
         }
         
-        log.info("Exiting BandhanServiceImpl parseBandhan3: " + bankStatementInfo);
+        log.info("Exiting BandhanServiceImpl parseBandhan3: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for BandhanServiceImpl parseBandhan3 is ==>" + timeTaken);
         return bankStatementInfo;

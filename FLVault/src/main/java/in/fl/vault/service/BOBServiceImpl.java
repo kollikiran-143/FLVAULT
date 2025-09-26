@@ -103,7 +103,7 @@ public class BOBServiceImpl implements BOBService {
 //			e.printStackTrace();
 			log.error("Error in BOBServiceImpl parseBOB1:", e);
 		}
-		log.info("Exiting BOBServiceImpl parseBOB1: " + bsInfo);
+		log.info("Exiting BOBServiceImpl parseBOB1: " + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for BOBServiceImpl parseBOB1 is ==>" + timeTaken);
 		return bsInfo;
@@ -218,7 +218,7 @@ public class BOBServiceImpl implements BOBService {
 //			e.printStackTrace();
 			log.error("Error in BOBServiceImpl parseBOB2:", e);
 		}
-		log.info("Exiting BOBServiceImpl parseBOB2: " + bsInfo);
+		log.info("Exiting BOBServiceImpl parseBOB2:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for BOBServiceImpl parseBOB2 is ==>" + timeTaken);
 		return bsInfo;
@@ -403,7 +403,7 @@ public class BOBServiceImpl implements BOBService {
 //			e.printStackTrace();
 			log.error("Error in BOBServiceImpl parseBOB4:", e);
 		}
-		log.info("Exiting BOBServiceImpl parseBOB4: " + bsInfo);
+		log.info("Exiting BOBServiceImpl parseBOB4:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for BOBServiceImpl parseBOB4 is ==>" + timeTaken);
 		return bsInfo;
@@ -526,7 +526,7 @@ public class BOBServiceImpl implements BOBService {
 			log.error("Error in BOBServiceImpl parseBOB5: " + e);
 		}
 
-		log.info("Exiting BOBServiceImpl parseBOB5: " + bankStatementInfo);
+		log.info("Exiting BOBServiceImpl parseBOB5: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for BOBServiceImpl parseBOB5 is ==>" + timeTaken);
 		return bankStatementInfo;

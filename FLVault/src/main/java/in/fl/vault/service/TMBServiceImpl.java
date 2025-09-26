@@ -144,7 +144,7 @@ public class TMBServiceImpl implements TMBService {
 			log.error("Error in MBService parseTMB1: " + e);
 		}
 
-		log.info("Exiting TMBServiceImpl parseTMB1 with response: " + bsInfo);
+		log.info("Exiting TMBServiceImpl parseTMB1 with response:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for TMBServiceImpl parseTMB1 is ==> " + timeTaken);
 		return bsInfo;
@@ -284,7 +284,7 @@ public class TMBServiceImpl implements TMBService {
 			log.error("Error in MBService parseTMB2: " + e);
 		}
 
-		log.info("Exiting TMBServiceImpl parseTMB2 with response: " + bsInfo);
+		log.info("Exiting TMBServiceImpl parseTMB2 with response:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for TMBServiceImpl parseTMB2 is ==>" + timeTaken);
 		return bsInfo;
@@ -322,7 +322,7 @@ public class TMBServiceImpl implements TMBService {
 //            e.printStackTrace();
 			log.error("Error in TMBServiceImpl parseTMB3: " + e);
 		}
-		log.info("Exiting TMBServiceImpl parseTMB3 with response: " + bankStatementInfo);
+		log.info("Exiting TMBServiceImpl parseTMB3 with response: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for TMBServiceImpl parseTMB3 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -351,7 +351,7 @@ public class TMBServiceImpl implements TMBService {
 //          e.printStackTrace();
 			log.error("Error in TMBServiceImpl parseTMB4: " + e);
 		}
-		log.info("Exiting TMBServiceImpl parseTMB4: " + bankStatementInfo);
+		log.info("Exiting TMBServiceImpl parseTMB4: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for TMBServiceImpl parseTMB4 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -384,7 +384,7 @@ public class TMBServiceImpl implements TMBService {
 //        	e.printStackTrace();
 			log.error("Error in TMBServiceImpl parseTMB5: " + e);
 		}
-		log.info("Exiting TMBServiceImpl parseTMB5: " + bankStatementInfo);
+		log.info("Exiting TMBServiceImpl parseTMB5: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for TMBServiceImpl parseTMB5 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -529,7 +529,7 @@ public class TMBServiceImpl implements TMBService {
 			log.error("Error in TMBService parseTMB6: " + e);
 		}
 
-		log.info("Exiting TMBServiceImpl parseTMB6 with response: " + bsInfo);
+		log.info("Exiting TMBServiceImpl parseTMB6 with response:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for TMBServiceImpl parseTMB6 is ==>" + timeTaken);
 		return bsInfo;
@@ -652,7 +652,7 @@ public class TMBServiceImpl implements TMBService {
 			log.error("Error in TMBService parseTMB7: " + e);
 		}
 
-		log.info("Exiting TMBServiceImpl parseTMB7 with response: " + bsInfo);
+		log.info("Exiting TMBServiceImpl parseTMB7 with response:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for TMBServiceImpl parseTMB7 is ==> " + timeTaken);
 		return bsInfo;

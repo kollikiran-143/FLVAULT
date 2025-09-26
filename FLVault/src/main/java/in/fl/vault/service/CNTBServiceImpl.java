@@ -54,7 +54,7 @@ public class CNTBServiceImpl implements CNTBService{
         	log.error("Error in CNTBServiceImpl parseCNTB1: "+e);
         }
         
-        log.info("Exiting CNTBServiceImpl parseCNTB1: " + bankStatementInfo);
+        log.info("Exiting CNTBServiceImpl parseCNTB1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CNTBServiceImpl parseCNTB1 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -157,7 +157,7 @@ public class CNTBServiceImpl implements CNTBService{
 //			e.printStackTrace();
 			log.error("Error in CNTBServiceImpl parseCNTB2: ", e);
 		}
-		log.info("Exiting CNTBServiceImpl parseCNTB2: " + bsInfo);
+		log.info("Exiting CNTBServiceImpl parseCNTB2:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CNTBServiceImpl parseCNTB2 is ==>" + timeTaken+" ms");
 		return bsInfo;
@@ -198,7 +198,7 @@ public class CNTBServiceImpl implements CNTBService{
         	log.error("Error in CNTBServiceImpl parseCNTB3: "+e);
         }
         
-        log.info("Exiting CNTBServiceImpl parseCNTB3: " + bankStatementInfo);
+        log.info("Exiting CNTBServiceImpl parseCNTB3: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CNTBServiceImpl parseCNTB3 is ==>" + timeTaken);
         return bankStatementInfo;

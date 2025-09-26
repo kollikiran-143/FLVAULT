@@ -28,15 +28,14 @@ public class ParseBankStmtController {
 		CommonUtils.mdcPut("CustomerId", request.getCustomerId());
 		log.info("Entering ParseBankStmtController parseBankStatement: " + request);
 		ParseBankStmtResponseDTO response = new ParseBankStmtResponseDTO();
-		if(request.getCustomerId() == null || request.getCustomerId().equalsIgnoreCase("")
-				|| request.getFileName() == null || request.getFileName().equalsIgnoreCase("")) {
+		if (request.getCustomerId() == null || request.getCustomerId().equalsIgnoreCase("") || request.getFileName() == null || request.getFileName().equalsIgnoreCase("")) {
 			response.setStatusCode(WebConstants.FAILURE_CODE);
 			response.setStatusMessage("Please provide all the details.");
-		}else {
+		} else {
 			response = stmtService.parseStatement(request);
 
 		}
-		log.info("ParseBankStmtController parseBankStatement Response: " + response);
+		log.info("ParseBankStmtController parseBankStatement Response: " + response.printWithoutTrxs());
 		MDC.remove("CustomerId");
 		return response;
 	}

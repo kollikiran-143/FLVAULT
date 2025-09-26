@@ -52,7 +52,7 @@ public class CanaraServiceImpl implements CanaraService{
 			log.error("Error in CanaraServiceImpl parseCanara1: "+e);
 		}
 		
-        log.info("Exiting CanaraServiceImpl parseCanara1 with response: " + bsInfo);
+        log.info("Exiting CanaraServiceImpl parseCanara1 with response:" + bsInfo.printWithoutTrxs());
         long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CanaraServiceImpl parseCanara1 is ==>" + timeTaken);
         return bsInfo;
@@ -178,7 +178,7 @@ public class CanaraServiceImpl implements CanaraService{
 			log.error("Error in CanaraServiceImpl parseCanara4: "+e);
 		}
 		
-        log.info("Exiting CanaraServiceImpl parseCanara4 with response: " + bsInfo);
+        log.info("Exiting CanaraServiceImpl parseCanara4 with response:" + bsInfo.printWithoutTrxs());
         long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CanaraServiceImpl parseCanara4 is ==>" + timeTaken);
         return bsInfo;
@@ -215,7 +215,7 @@ public class CanaraServiceImpl implements CanaraService{
 			log.error("Error in CanaraServiceImpl parseCanara5: "+e);
 		}
 		
-        log.info("Exiting CanaraServiceImpl parseCanara5 with response: " + bsInfo);
+        log.info("Exiting CanaraServiceImpl parseCanara5 with response:" + bsInfo.printWithoutTrxs());
         long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CanaraServiceImpl parseCanara5 is ==>" + timeTaken);
         return bsInfo;
@@ -254,7 +254,7 @@ public class CanaraServiceImpl implements CanaraService{
 			log.error("Error in CanaraServiceImpl parseCanara6: "+e);
 		}
 		
-        log.info("Exiting CanaraServiceImpl parseCanara6 with response: " + bsInfo);
+        log.info("Exiting CanaraServiceImpl parseCanara6 with response:" + bsInfo.printWithoutTrxs());
         long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CanaraServiceImpl parseCanara6 is ==>" + timeTaken);
         return bsInfo;
@@ -291,7 +291,7 @@ public class CanaraServiceImpl implements CanaraService{
         	log.error("Error in CanaraServiceImpl parseCanara7: "+e);
         }
 
-        log.info("Exiting CanaraServiceImpl parseCanara7: " + bankStatementInfo);
+        log.info("Exiting CanaraServiceImpl parseCanara7: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CanaraServiceImpl parseCanara7 is ==>" + timeTaken);
 

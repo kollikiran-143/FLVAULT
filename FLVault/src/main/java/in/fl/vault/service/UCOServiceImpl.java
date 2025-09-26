@@ -51,7 +51,7 @@ public class UCOServiceImpl implements UCOService {
 			log.error("Error in UCOServiceImpl parseUCO1: " + e);
 		}
 
-		log.info("Exiting UCOServiceImpl parseUCO1: " + bankStatementInfo);
+		log.info("Exiting UCOServiceImpl parseUCO1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for UCOServiceImpl parseUCO1 is ==> " + timeTaken);
 		return bankStatementInfo;
@@ -85,7 +85,7 @@ public class UCOServiceImpl implements UCOService {
 			log.error("Error in UCOServiceImpl parseUCO2: " + e);
 		}
 
-		log.info("Exiting UCOServiceImpl parseUCO2: " + bankStatementInfo);
+		log.info("Exiting UCOServiceImpl parseUCO2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for UCOServiceImpl parseUCO2 is ==> " + timeTaken);
 		return bankStatementInfo;
@@ -120,7 +120,7 @@ public class UCOServiceImpl implements UCOService {
 //        	e.printStackTrace();
 			log.error("Error in UCOServiceImpl parseUCO3: " + e);
 		}
-		log.info("Exiting UCOServiceImpl parseUCO3: " + bankStatementInfo);
+		log.info("Exiting UCOServiceImpl parseUCO3: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for UCOServiceImpl parseUCO3 is ==> " + timeTaken);
 		return bankStatementInfo;
@@ -168,7 +168,7 @@ public class UCOServiceImpl implements UCOService {
 //        	e.printStackTrace();
 			log.error("Error in UCOServiceImpl parseUCO4: " + e);
 		}
-		log.info("Exiting UCOServiceImpl parseUCO4: " + bankStatementInfo);
+		log.info("Exiting UCOServiceImpl parseUCO4: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for UCOServiceImpl parseUCO4 is ==> " + timeTaken);
 		return bankStatementInfo;
@@ -202,7 +202,7 @@ public class UCOServiceImpl implements UCOService {
 //        	e.printStackTrace();
 			log.error("Error in UCOServiceImpl parseUCO5: " + e);
 		}
-		log.info("Exiting UCOServiceImpl parseUCO5: " + bankStatementInfo);
+		log.info("Exiting UCOServiceImpl parseUCO5: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for UCOServiceImpl parseUCO5 is ==> " + timeTaken);
 		return bankStatementInfo;

@@ -49,7 +49,7 @@ public class IOBServiceImpl implements IOBService {
 			log.error("Error in IOBServiceImpl parseIOB1: " + e);
 		}
 
-		log.info("Exiting IOBServiceImpl parseIOB1: " + bankStatementInfo);
+		log.info("Exiting IOBServiceImpl parseIOB1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IOBServiceImpl parseIOB1 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -95,7 +95,7 @@ public class IOBServiceImpl implements IOBService {
 			log.error("Error in IOBServiceImpl parseIOB2: ", e);
 		}
 
-		log.info("Exiting IOBServiceImpl parseIOB2: " + bankStatementInfo);
+		log.info("Exiting IOBServiceImpl parseIOB2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IOBServiceImpl parseIOB2 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -135,7 +135,7 @@ public class IOBServiceImpl implements IOBService {
 			log.error("Error in IOBServiceImpl parseIOB4: ", e);
 		}
 
-		log.info("Exiting IOBServiceImpl parseIOB4: " + bankStatementInfo);
+		log.info("Exiting IOBServiceImpl parseIOB4: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IOBServiceImpl parseIOB4 is ==>" + timeTaken);
 		return bankStatementInfo;

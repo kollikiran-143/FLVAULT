@@ -85,7 +85,7 @@ public class FederalServiceImpl implements FederalService{
 //			e.printStackTrace();
 			log.error("Error in FederalServiceImpl parseFederal1: " + e);
 		}
-		log.info("Exiting FederalServiceImpl parseFederal1: " + bankStatementInfo);
+		log.info("Exiting FederalServiceImpl parseFederal1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for FederalServiceImpl parseFederal1 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -129,7 +129,7 @@ public class FederalServiceImpl implements FederalService{
 			log.error("Error in FederalServiceImpl parseFederal2: " + e);
 		}
 
-		log.info("Exiting FederalServiceImpl parseFederal: " + bankStatementInfo);
+		log.info("Exiting FederalServiceImpl parseFederal: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for FederalServiceImpl parseFederal2 is ==>" + timeTaken);
 		return bankStatementInfo;

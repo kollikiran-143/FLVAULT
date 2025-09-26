@@ -52,7 +52,7 @@ public class FincareServiceImpl implements FincareService{
         	log.error("Error in FincareServiceImpl parseFincare1: "+e);
         }
         
-        log.info("Exiting FincareServiceImpl parseFincare1: " + bankStatementInfo);
+        log.info("Exiting FincareServiceImpl parseFincare1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for FincareServiceImpl parseFincare1 is ==>" + timeTaken);
         return bankStatementInfo;

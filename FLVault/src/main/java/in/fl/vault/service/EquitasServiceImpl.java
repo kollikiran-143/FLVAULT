@@ -55,7 +55,7 @@ public class EquitasServiceImpl implements EquitasService{
 //			e.printStackTrace();
 			log.error("Error in EquitasServiceImpl parseEquitas1: ", e);
 		}
-		log.info("Exiting EquitasServiceImpl parseEquitas1: " + bankStatementInfo);
+		log.info("Exiting EquitasServiceImpl parseEquitas1: " + bankStatementInfo.printWithoutTrxs());
 		log.info("Time Taken for EquitasServiceImpl parseEquitas1 is ==>"
 				+ (System.currentTimeMillis() - startTimeInMillis));
 		return bankStatementInfo;
@@ -91,7 +91,7 @@ public class EquitasServiceImpl implements EquitasService{
 		} catch (Exception e) {
 			log.error("Error in EquitasServiceImpl parseEquitas2 :", e);
 		}
-		log.info("Exiting EquitasServiceImpl parseEquitas2 : " + bankStatementInfo);
+		log.info("Exiting EquitasServiceImpl parseEquitas2 : " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for EquitasServiceImpl parseEquitas2 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -130,7 +130,7 @@ public class EquitasServiceImpl implements EquitasService{
 		} catch (Exception e) {
 			log.error("Error in EquitasServiceImpl parseEquitas3:", e);
 		}
-		log.info("Exiting EquitasServiceImpl parseEquitas3: " + bankStatementInfo);
+		log.info("Exiting EquitasServiceImpl parseEquitas3: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for EquitasServiceImpl parseEquitas3 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -185,7 +185,7 @@ public class EquitasServiceImpl implements EquitasService{
 		} catch (Exception e) {
 			log.error("Error in EquitasServiceImpl parseEquitas4: ", e);
 		}
-		log.info("Exiting EquitasServiceImpl parseEquitas4 : " + bankStatementInfo);
+		log.info("Exiting EquitasServiceImpl parseEquitas4 : " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for EquitasServiceImpl parseEquitas4 is ==>" + timeTaken);
 		return bankStatementInfo;

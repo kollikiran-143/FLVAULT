@@ -53,7 +53,7 @@ public class HDFCServiceImpl implements HDFCService{
         	log.error("Error in HDFCServiceImpl parseHDFC1 is: "+e);
         }
 
-        log.info("Exiting HDFCServiceImpl parseHDFC1: " + bankStatementInfo);
+        log.info("Exiting HDFCServiceImpl parseHDFC1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for HDFCServiceImpl parseHDFC1 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -111,7 +111,7 @@ public class HDFCServiceImpl implements HDFCService{
         	log.error("Error in HDFCServiceImpl parseHDFC2 is: "+e);
         }
 
-        log.info("Exiting HDFCServiceImpl parseHDFC2: " + bankStatementInfo);
+        log.info("Exiting HDFCServiceImpl parseHDFC2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for HDFCServiceImpl parseHDFC2 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -171,7 +171,7 @@ public class HDFCServiceImpl implements HDFCService{
         	log.error("Error in HDFCServiceImpl parseHDFC3 is: "+e);
         }
 
-        log.info("Exiting HDFCServiceImpl parseHDFC3: " + bankStatementInfo);
+        log.info("Exiting HDFCServiceImpl parseHDFC3: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for HDFCServiceImpl parseHDFC3 is ==>" + timeTaken);
         return bankStatementInfo;

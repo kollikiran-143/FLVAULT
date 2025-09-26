@@ -16,10 +16,10 @@ import in.fl.vault.response.Transaction;
 import in.fl.vault.utils.CommonUtils;
 
 @Service
-public class AUBLServiceImpl implements AUBLService{
-	
+public class AUBLServiceImpl implements AUBLService {
+
 	private final static Logger log = Logger.getLogger(AUBLServiceImpl.class);
-	
+
 	@Override
 	public BSInfo parseAUBL1(ParseBankStmtRequestDTO request) throws IOException {
 		long startTimeInMillis = System.currentTimeMillis();
@@ -36,19 +36,19 @@ public class AUBLServiceImpl implements AUBLService{
 
 			String dateFormat = "dd-MMM-yyyy";
 			bankstatementInfo.setStartDate(CommonUtils.dateFormatter(CommonUtils.extractField(text, "STATEMENT\\s*PERIOD\\s*:\\s*(\\d{2}-\\w{3}-\\d{4})"), dateFormat));
-			bankstatementInfo.setEnDate(CommonUtils.dateFormatter(CommonUtils.extractField(text, "STATEMENT\\s*PERIOD\\s*:\\s*\\S*\\s*-\\s*(\\d{2}-\\w{3}-\\d{4})"),dateFormat));
+			bankstatementInfo.setEnDate(CommonUtils.dateFormatter(CommonUtils.extractField(text, "STATEMENT\\s*PERIOD\\s*:\\s*\\S*\\s*-\\s*(\\d{2}-\\w{3}-\\d{4})"), dateFormat));
 			bankstatementInfo.setTransactions(extracTransactionsAUBL_1(text, bankstatementInfo.getAccountNo(), dateFormat));
 		} catch (Exception e) {
 //			e.printStackTrace();
 			log.error("Error in AUBLServiceImpl parseAUBL1: " + e);
 		}
 
-		log.info("Exiting AUBLServiceImpl parseAUBL1: " + bankstatementInfo);
+		log.info("Exiting AUBLServiceImpl parseAUBL1: " + bankstatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for AUBLServiceImpl parseAUBL1 is: " + timeTaken);
 		return bankstatementInfo;
 	}
-	
+
 	@Override
 	public BSInfo parseAUBL2(ParseBankStmtRequestDTO request) throws IOException {
 		long startTimeInMillis = System.currentTimeMillis();
@@ -59,32 +59,28 @@ public class AUBLServiceImpl implements AUBLService{
 		String dateFormat = "ddMMMyyyy";
 		try {
 			String text = CommonUtils.extractTextFromPdf(filepath, "5");
-			bankstatementInfo.setName(CommonUtils.extractField(text, "Account\\s*Nam\\s*e\\s*:\\s*([\\s\\S]{0,55})")
-					.replaceAll("\\s+", " ").trim());
+			bankstatementInfo.setName(CommonUtils.extractField(text, "Account\\s*Nam\\s*e\\s*:\\s*([\\s\\S]{0,55})").replaceAll("\\s+", " ").trim());
 			String dates[] = CommonUtils.extractField(text, "StatementFrom\\s*(.*)").replaceAll("\\s*", "").split("To");
 			if (dates.length == 2) {
 				bankstatementInfo.setStartDate(CommonUtils.dateFormatter(dates[0], dateFormat));
 				bankstatementInfo.setEnDate(CommonUtils.dateFormatter(dates[1], dateFormat));
 			}
-			bankstatementInfo.setAddress(
-					CommonUtils.extractMultiLinesField(text, "(Address[\\s\\S]*?)(?=\\s*AccountNum)", 19, 50)
-							.replaceAll(":", "").replaceAll("\\s+", " "));
+			bankstatementInfo.setAddress(CommonUtils.extractMultiLinesField(text, "(Address[\\s\\S]*?)(?=\\s*AccountNum)", 19, 50).replaceAll(":", "").replaceAll("\\s+", " "));
 			bankstatementInfo.setAccountNo(CommonUtils.extractField(text, "AccountNum\\s*ber\\s*-\\s*(\\d*)"));
 			bankstatementInfo.setIfsc(CommonUtils.extractField(text, "IFSCCode-(.{25})").trim());
 
-			bankstatementInfo
-					.setTransactions(extracTransactionsAUBL_2(text, bankstatementInfo.getAccountNo(), dateFormat));
+			bankstatementInfo.setTransactions(extracTransactionsAUBL_2(text, bankstatementInfo.getAccountNo(), dateFormat));
 		} catch (Exception e) {
 //			e.printStackTrace();
 			log.error("Error in AUBLServiceImpl parseAUBL1: " + e);
 		}
 
-		log.info("Exiting AUBLServiceImpl parseAUBL1: " + bankstatementInfo);
+		log.info("Exiting AUBLServiceImpl parseAUBL2: " + bankstatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for AUBLServiceImpl parseAUBL1 is: " + timeTaken);
 		return bankstatementInfo;
 	}
-	
+
 	@Override
 	public BSInfo parseAUBL3(ParseBankStmtRequestDTO request) {
 		long startTimeInMillis = System.currentTimeMillis();
@@ -98,8 +94,7 @@ public class AUBLServiceImpl implements AUBLService{
 			bankstatementInfo.setAccountNo(CommonUtils.extractField(text, "Account\\s*Number\\s*:\\s*(\\S*)"));
 			bankstatementInfo.setIfsc(CommonUtils.extractField(text, "IFSC\\s*:\\s*(AUBL\\w{7})").trim());
 			bankstatementInfo.setName(CommonUtils.extractField(text, "ACCOUNT.*\\n\\s*Name\\s*:\\s*(.{40})").replaceAll("\\s+", " ").trim());
-			bankstatementInfo.setAddress(CommonUtils.extractMultiLinesField(text, "(\\s*Address[\\s\\S]*?)\\n\\s*Statement\\s*Date", 75)
-					.replaceAll("\\s+", " ").trim());
+			bankstatementInfo.setAddress(CommonUtils.extractMultiLinesField(text, "(\\s*Address[\\s\\S]*?)\\n\\s*Statement\\s*Date", 75).replaceAll("\\s+", " ").trim());
 			bankstatementInfo.setBranch(CommonUtils.extractField(text, "Branch\\s*:\\s*(.*)").replaceAll("\\s+", " ").trim());
 			bankstatementInfo.setNominee(CommonUtils.extractField(text, "Nominee\\s*:\\s*(.*)").replaceAll("\\s+", " ").trim());
 			bankstatementInfo.setAccountType(CommonUtils.extractField(text, "Account\\s*Type\\s*:\\s*(.*)").replaceAll("\\s+", " ").trim());
@@ -115,7 +110,7 @@ public class AUBLServiceImpl implements AUBLService{
 			log.error("Error in AUBLServiceImpl parseAUBL3: " + e);
 		}
 
-		log.info("Exiting AUBLServiceImpl parseAUBL3: " + bankstatementInfo);
+		log.info("Exiting AUBLServiceImpl parseAUBL3: " + bankstatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for AUBLServiceImpl parseAUBL3 is: " + timeTaken);
 		return bankstatementInfo;
@@ -125,8 +120,7 @@ public class AUBLServiceImpl implements AUBLService{
 		List<Transaction> transactions = new ArrayList<>();
 		pdfText = pdfText.replaceAll(".*?Opening\\s*Balance.*\\n", "");
 
-		Pattern pattern = Pattern.compile(
-				"(\\d{2}-\\w{3}-\\d{4})\\s*(.{70})\\s*([\\d,\\.]+)(\\s+)([\\d,\\.]+)([\\s\\S]*?)(?=((\\d{2}-\\w{3}-\\d{4})|Account))");
+		Pattern pattern = Pattern.compile("(\\d{2}-\\w{3}-\\d{4})\\s*(.{70})\\s*([\\d,\\.]+)(\\s+)([\\d,\\.]+)([\\s\\S]*?)(?=((\\d{2}-\\w{3}-\\d{4})|Account))");
 		Matcher matcher = pattern.matcher(pdfText);
 		int serialNoCount = 1;
 
@@ -152,12 +146,10 @@ public class AUBLServiceImpl implements AUBLService{
 		}
 		return transactions;
 	}
-	
-	private List<Transaction> extracTransactionsAUBL_2(String pdfText, String accountNo, String dateFormat)
-			throws IOException {
+
+	private List<Transaction> extracTransactionsAUBL_2(String pdfText, String accountNo, String dateFormat) throws IOException {
 		List<Transaction> transactions = new ArrayList<>();
-		pdfText = pdfText.replaceAll(".*?Opening\\s*Balance.*\\n", "")
-				.replaceAll("(?m)^\\s*\\d*\\n*\\s*Pleasereview\\s*theAcco\\s*untBalance[\\s\\S]*?Balance\\R?", "");
+		pdfText = pdfText.replaceAll(".*?Opening\\s*Balance.*\\n", "").replaceAll("(?m)^\\s*\\d*\\n*\\s*Pleasereview\\s*theAcco\\s*untBalance[\\s\\S]*?Balance\\R?", "");
 
 //		FileUtils.writeStringToFile(new File("/home/deepak/Documents/test.txt"), pdfText);
 
@@ -241,23 +233,23 @@ public class AUBLServiceImpl implements AUBLService{
 	private List<Transaction> extracTransactionsAUBL_3(String fileName, String accountNo, String dateFormat) throws IOException {
 		List<Transaction> transactions = new ArrayList<>();
 		List<String[]> txnRows = CommonUtils.tabulaExtraction(fileName);
-		
+
 		int serialNoCount = 1;
-		if(txnRows != null && !txnRows.isEmpty()) {
+		if (txnRows != null && !txnRows.isEmpty()) {
 			for (String[] row : txnRows) {
 				String line = String.join("|", row).replaceAll("\\s+", " ");
 				if (line.trim().isEmpty()) {
 					continue;
 				}
 				String[] data = line.split("\\|");
-				
+
 				if (data.length >= 7 && !data[0].equalsIgnoreCase("Transaction Date")) {
 					Transaction transaction = new Transaction();
 					transaction.setsNo(Integer.toString(serialNoCount++));
-					
-					transaction.setTxnDate(CommonUtils.dateFormatter(data[0].replaceAll("\\s*", ""), dateFormat)); 
+
+					transaction.setTxnDate(CommonUtils.dateFormatter(data[0].replaceAll("\\s*", ""), dateFormat));
 					transaction.setValueDate(CommonUtils.dateFormatter(data[1].replaceAll("\\s*", ""), dateFormat));
-					transaction.setDescription(data[2]); 
+					transaction.setDescription(data[2]);
 					transaction.setTxnId(data[3]);
 
 					if (!data[4].isEmpty() && !data[4].equals("-")) {
@@ -271,7 +263,7 @@ public class AUBLServiceImpl implements AUBLService{
 						transaction.setDebit("");
 						transaction.setTxnType("CREDIT");
 					}
-					transaction.setBalance(data[6]); 
+					transaction.setBalance(data[6]);
 					transaction.setAccNo(accountNo);
 					transactions.add(transaction);
 				}

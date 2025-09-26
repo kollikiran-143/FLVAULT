@@ -47,7 +47,7 @@ public class PNBServiceImpl implements PNBService{
         	log.error("Error in PNBServiceImpl parsePNB1: "+e);
         }
         
-        log.info("Exiting PNBServiceImpl parsePNB1: " + bsInfo);
+        log.info("Exiting PNBServiceImpl parsePNB1:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for PNBServiceImpl parsePNB1 is ==>" + timeTaken);
         return bsInfo;
@@ -83,7 +83,7 @@ public class PNBServiceImpl implements PNBService{
         	log.error("Error in PNBServiceImpl parsePNB2: "+e);
         }
         
-        log.info("Exiting PNBServiceImpl parsePNB2: " + bsInfo);
+        log.info("Exiting PNBServiceImpl parsePNB2:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for PNBServiceImpl parsePNB2 is ==>" + timeTaken);
         return bsInfo;
@@ -151,7 +151,7 @@ public class PNBServiceImpl implements PNBService{
         	log.error("Error in PNBServiceImpl parsePNB4: "+e);
         }
         
-        log.info("Exiting PNBServiceImpl parsePNB4: " + bsInfo);
+        log.info("Exiting PNBServiceImpl parsePNB4:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for PNBServiceImpl parsePNB4 is ==>" + timeTaken);
         return bsInfo;
@@ -192,7 +192,7 @@ public class PNBServiceImpl implements PNBService{
 			log.error("Error in PNBServiceImpl parsePNB4: " + e);
 		}
 
-		log.info("Exiting PNBServiceImpl parsePNB4: " + bsInfo);
+		log.info("Exiting PNBServiceImpl parsePNB4:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for PNBServiceImpl parsePNB4 is ==>" + timeTaken);
 		return bsInfo;

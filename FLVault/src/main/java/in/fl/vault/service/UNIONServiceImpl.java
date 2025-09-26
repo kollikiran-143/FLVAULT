@@ -54,7 +54,7 @@ public class UNIONServiceImpl implements UNIONService {
 			log.error("Error in UNIONServiceImpl parseUNION1: " + e);
 		}
 
-		log.info("Exiting UNIONServiceImpl parseUNION1: " + bankStatementInfo);
+		log.info("Exiting UNIONServiceImpl parseUNION1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for UNIONServiceImpl parseUNION1 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -91,7 +91,7 @@ public class UNIONServiceImpl implements UNIONService {
 //			e.printStackTrace();
 			log.error("Error UNIONServiceImpl parseUNION2:", e);
 		}
-		log.info("Exiting UNIONServiceImpl parseUNION2: " + bankStatementInfo);
+		log.info("Exiting UNIONServiceImpl parseUNION2: " + bankStatementInfo.printWithoutTrxs());
 		log.info("Time Taken for UNIONServiceImpl parseUNION1 is ==>" + (System.currentTimeMillis() - startTimeInMillis));
 		return bankStatementInfo;
 	}
@@ -126,7 +126,7 @@ public class UNIONServiceImpl implements UNIONService {
 //			e.printStackTrace();
 			log.error("Error UNIONServiceImpl parseUNION3:", e);
 		}
-		log.info("Exiting UNIONServiceImpl parseUNION3: " + bankStatementInfo);
+		log.info("Exiting UNIONServiceImpl parseUNION3: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for UNIONServiceImpl parseUNION3 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -162,7 +162,7 @@ public class UNIONServiceImpl implements UNIONService {
 //			e.printStackTrace();
 			log.error("Error in UNIONServiceImpl parseUNION4: " + e);
 		}
-		log.info("Exiting UNIONServiceImpl parseUNION4: " + bankStatementInfo);
+		log.info("Exiting UNIONServiceImpl parseUNION4: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for UNIONServiceImpl parseUNION4 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -191,7 +191,7 @@ public class UNIONServiceImpl implements UNIONService {
 //			e.printStackTrace();
 			log.error("Error in UNIONServiceImpl parseUNION5: " + e);
 		}
-		log.info("Exiting UNIONServiceImpl parseUNION5: " + bankStatementInfo);
+		log.info("Exiting UNIONServiceImpl parseUNION5: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for UNIONServiceImpl parseUNION5 is ==>" + timeTaken);
 		return bankStatementInfo;

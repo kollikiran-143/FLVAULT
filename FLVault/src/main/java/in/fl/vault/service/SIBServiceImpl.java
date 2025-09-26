@@ -64,7 +64,7 @@ public class SIBServiceImpl implements SIBService{
 			log.error("Error in SIBServiceImpl parseSIB1: ", e);
 		}
 
-		log.info("Exiting SIBServiceImpl parseSIB1: " + bankStatementInfo);
+		log.info("Exiting SIBServiceImpl parseSIB1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for SIBServiceImpl parseSIB1 is ==> " + timeTaken);
 		return bankStatementInfo;
@@ -104,7 +104,7 @@ public class SIBServiceImpl implements SIBService{
 	        log.error("Error in SIBServiceImpl parseSIB2: ", e);
 	    }
 
-	    log.info("Exiting SIBServiceImpl parseSIB2: " + bankStatementInfo);
+	    log.info("Exiting SIBServiceImpl parseSIB2: " + bankStatementInfo.printWithoutTrxs());
 	    long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 	    log.info("Time Taken for SIBServiceImpl parseSIB2 is ==> " + timeTaken);
 	    return bankStatementInfo;
@@ -143,7 +143,7 @@ public class SIBServiceImpl implements SIBService{
 	        log.error("Error in SIBServiceImpl parseSIB3: ", e);
 	    }
 
-	    log.info("Exiting SIBServiceImpl parseSIB3: " + bankStatementInfo);
+	    log.info("Exiting SIBServiceImpl parseSIB3: " + bankStatementInfo.printWithoutTrxs());
 	    long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 	    log.info("Time Taken for SIBServiceImpl parseSIB3 is ==> " + timeTaken);
 	    return bankStatementInfo;
@@ -180,7 +180,7 @@ public class SIBServiceImpl implements SIBService{
 			log.error("Error in SIBServiceImpl parseSIB4: ", e);
 		}
 
-		log.info("Exiting SIBServiceImpl parseSIB4: " + bankStatementInfo);
+		log.info("Exiting SIBServiceImpl parseSIB4: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for SIBServiceImpl parseSIB4 is ==> " + timeTaken);
 		return bankStatementInfo;

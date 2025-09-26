@@ -51,7 +51,7 @@ public class KOTAKServiceImpl implements KOTAKService{
         	log.error("Error in KOTAKServiceImpl parseKOTAK1: "+e);
         }
         
-        log.info("Exiting KOTAKServiceImpl parseKOTAK1: " + bankStatementInfo);
+        log.info("Exiting KOTAKServiceImpl parseKOTAK1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for KOTAKServiceImpl parseKOTAK1 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -90,7 +90,7 @@ public class KOTAKServiceImpl implements KOTAKService{
 //        	e.printStackTrace();
         	log.error("Error in KOTAKServiceImpl parseKOTAK2: "+e);
         }       
-        log.info("Exiting KOTAKServiceImpl parseKOTAK2: " + bankStatementInfo);
+        log.info("Exiting KOTAKServiceImpl parseKOTAK2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for KOTAKServiceImpl parseKOTAK2 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -176,7 +176,7 @@ public class KOTAKServiceImpl implements KOTAKService{
 //        	e.printStackTrace();
         	log.error("Error in KOTAKServiceImpl parseKOTAK3: "+e);
         }       
-        log.info("Exiting KOTAKServiceImpl parseKOTAK3: " + bankStatementInfo);
+        log.info("Exiting KOTAKServiceImpl parseKOTAK3: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for KOTAKServiceImpl parseKOTAK3 is ==> " + timeTaken);
         return bankStatementInfo;
@@ -220,7 +220,7 @@ public class KOTAKServiceImpl implements KOTAKService{
 //        	e.printStackTrace();
         	log.error("Error in KOTAKServiceImpl parseKOTAK4: "+e);
         }       
-        log.info("Exiting KOTAKServiceImpl parseKOTAK4: " + bankStatementInfo);
+        log.info("Exiting KOTAKServiceImpl parseKOTAK4: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for KOTAKServiceImpl parseKOTAK4 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -255,7 +255,7 @@ public class KOTAKServiceImpl implements KOTAKService{
 //			e.printStackTrace();
 			log.error("Error in KOTAKServiceImpl parseKOTAK5: " + e);
 		}
-		log.info("Exiting KOTAKServiceImpl parseKOTAK5: " + bankStatementInfo);
+		log.info("Exiting KOTAKServiceImpl parseKOTAK5: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for KOTAKServiceImpl parseKOTAK5 is ==> " + timeTaken);
 		return bankStatementInfo;

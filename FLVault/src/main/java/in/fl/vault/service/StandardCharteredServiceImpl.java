@@ -61,7 +61,7 @@ private final static Logger log = Logger.getLogger(IndusIndServiceImpl.class);
         	log.error("Error in StandardCharteredServiceImpl parseSTND1: "+e);
         }
         
-        log.info("Exiting StandardCharteredServiceImpl parseSTND1: " + bankStatementInfo);
+        log.info("Exiting StandardCharteredServiceImpl parseSTND1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for StandardCharteredServiceImpl parseSTND1 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -102,7 +102,7 @@ private final static Logger log = Logger.getLogger(IndusIndServiceImpl.class);
         	log.error("Error in StandardCharteredServiceImpl parseSTND2: "+e);
         }
         
-        log.info("Exiting StandardCharteredServiceImpl parseSTND2: " + bankStatementInfo);
+        log.info("Exiting StandardCharteredServiceImpl parseSTND2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for StandardCharteredServiceImpl parseSTND2 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -169,7 +169,7 @@ private final static Logger log = Logger.getLogger(IndusIndServiceImpl.class);
 //          	e.printStackTrace();
 			log.error("Error in StandardCharteredServiceImpl parseSTND3: " + e);
 		}
-		log.info("Exiting StandardCharteredServiceImpl parseSTND3: " + bsInfo);
+		log.info("Exiting StandardCharteredServiceImpl parseSTND3:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for StandardCharteredServiceImpl parseSTND3 is ==> " + timeTaken);
 		return bsInfo;

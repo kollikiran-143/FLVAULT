@@ -42,7 +42,7 @@ public class SURYServiceImpl implements SURYService {
 			log.error("Error in SBIServiceImpl parseSURY1: " + e);
 		}
 
-		log.info("Exiting SBIServiceImpl parseSURY1: " + bankstatementInfo);
+		log.info("Exiting SBIServiceImpl parseSURY1: " + bankstatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for SBIServiceImpl parseSURY1 is: " + timeTaken);
 		return bankstatementInfo;

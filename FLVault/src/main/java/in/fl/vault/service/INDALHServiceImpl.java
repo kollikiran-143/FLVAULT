@@ -59,7 +59,7 @@ public class INDALHServiceImpl implements INDALHService{
 			log.error("Error in INDALHServiceImpl parseINDALH1: ", e);
 		}
 
-		log.info("Exiting INDALHServiceImpl parseINDALH1: " + bankStatementInfo);
+		log.info("Exiting INDALHServiceImpl parseINDALH1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IndianAllahaService parseINDALH1 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -105,7 +105,7 @@ public class INDALHServiceImpl implements INDALHService{
 			log.error("Error in INDALHServiceImpl parseINDALH2: "+e);
 		}
 		
-		log.info("Exiting INDALHServiceImpl parseINDALH2: " + bsInfo);
+		log.info("Exiting INDALHServiceImpl parseINDALH2:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for INDALHServiceImpl parseINDALH2 is ==>" + timeTaken);
 		return bsInfo;
@@ -212,7 +212,7 @@ public class INDALHServiceImpl implements INDALHService{
 //	    	e.printStackTrace();
 			log.error("Error in INDALHServiceImpl parseINDALH3: ", e);
 		}
-		log.info("Exiting INDALHServiceImpl parseINDALH3: " + bsInfo);
+		log.info("Exiting INDALHServiceImpl parseINDALH3:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for INDALHServiceImpl parseINDALH3 is ==>" + timeTaken);
 		return bsInfo;
@@ -250,7 +250,7 @@ public class INDALHServiceImpl implements INDALHService{
 			log.error("Error in INDALHServiceImpl parseINDALH4: "+e);
 		}
 		
-		log.info("Exiting INDALHServiceImpl parseINDALH4: " + bsInfo);
+		log.info("Exiting INDALHServiceImpl parseINDALH4:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for INDALHServiceImpl parseINDALH4 is ==>" + timeTaken);
 		return bsInfo;

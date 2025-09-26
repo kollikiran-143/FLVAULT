@@ -54,7 +54,7 @@ public class DLXBServiceImpl implements DLXBService{
 //        	e.printStackTrace();
 			log.error("Error in DLXBServiceImpl parseDLXB1: " + e);
 		}
-		log.info("Exiting DLXBServiceImpl parseDLXB1: " + bankStatementInfo);
+		log.info("Exiting DLXBServiceImpl parseDLXB1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for DLXBServiceImpl parseDLXB1 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -96,7 +96,7 @@ public class DLXBServiceImpl implements DLXBService{
 //        	e.printStackTrace();
 			log.error("Error in DLXBServiceImpl parseDLXB2: " + e);
 		}
-		log.info("Exiting DLXBServiceImpl parseDLXB2: " + bankStatementInfo);
+		log.info("Exiting DLXBServiceImpl parseDLXB2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for DLXBServiceImpl parseDLXB2 is ==>" + timeTaken);
 		return bankStatementInfo;

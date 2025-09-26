@@ -56,7 +56,7 @@ public class MAHBServiceImpl implements MAHBService{
 //			e.printStackTrace();
 			log.error("Error in MAHBServiceImpl parseMAHB1: " + e);
 		}
-		log.info("Exiting MAHBServiceImpl parseMAHB1: " + bankStatementInfo);
+		log.info("Exiting MAHBServiceImpl parseMAHB1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for MAHBServiceImpl parseMAHB1 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -86,7 +86,7 @@ public class MAHBServiceImpl implements MAHBService{
 //			e.printStackTrace();
 			log.error("Error in MAHBServiceImpl parseMAHB2: " + e);
 		}
-		log.info("Exiting MAHBServiceImpl parseMAHB2: " + bankStatementInfo);
+		log.info("Exiting MAHBServiceImpl parseMAHB2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for MAHBServiceImpl parseMAHB2 is ==>" + timeTaken);
 		return bankStatementInfo;

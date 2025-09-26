@@ -55,7 +55,7 @@ public class YESBServiceImpl implements YESBService {
 //			e.printStackTrace();
 			log.error("Error in YESBService parseYESB1: " + e);
 		}
-		log.info("Exiting YESService parseYESB1: " + bankStatementInfo);
+		log.info("Exiting YESService parseYESB1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for YESService parseYESB1 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -89,7 +89,7 @@ public class YESBServiceImpl implements YESBService {
 //			e.printStackTrace();
 			log.error("Error in YESBServiceImpl parseYESB2: " + e);
 		}
-		log.info("Exiting YESBServiceImpl parseYESB2: " + bankStatementInfo);
+		log.info("Exiting YESBServiceImpl parseYESB2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for YESBServiceImpl parseYESB2 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -125,7 +125,7 @@ public class YESBServiceImpl implements YESBService {
 //			e.printStackTrace();
 			log.error("Error in YESBService parseYESB3: " + e);
 		}
-		log.info("Exiting YESService parseYESB1: " + bankStatementInfo);
+		log.info("Exiting YESService parseYESB1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for YESBService parseYESB3 is ==>" + timeTaken);
 		return bankStatementInfo;

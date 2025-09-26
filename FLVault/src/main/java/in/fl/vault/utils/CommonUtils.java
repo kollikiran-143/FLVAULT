@@ -57,7 +57,7 @@ public class CommonUtils {
 
 			pdfText = pdfText.replaceAll("\n[ \t\n]\n", "\n"); // remove all empty lines
 			if (!activeProfile.equalsIgnoreCase("prod")) {
-				Files.write(Paths.get("/home/vishnu/Documents/test.txt"), pdfText.getBytes());
+				Files.write(Paths.get("/VAULT/test.txt"), pdfText.getBytes());
 			}
 		} catch (FileNotFoundException e) {
 			log.error("File Not Found!");

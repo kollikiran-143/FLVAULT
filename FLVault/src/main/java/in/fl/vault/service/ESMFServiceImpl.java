@@ -44,7 +44,7 @@ public class ESMFServiceImpl implements ESMFService{
 			log.error("Error in ESMFServiceImpl parseESMF1: ", e);
 		}
 
-		log.info("Exiting ESMFServiceImpl parseESMF1: " + bankStatementInfo);
+		log.info("Exiting ESMFServiceImpl parseESMF1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for ESMFServiceImpl is ==>" + timeTaken);
 		return bankStatementInfo;

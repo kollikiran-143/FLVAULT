@@ -47,7 +47,7 @@ public class IndianServiceImpl implements IndianService{
 //			e.printStackTrace();
 			log.error("Error in IndianServiceImpl parseINDIAN1: "+e);
 		}
-        log.info("Exiting IndianServiceImpl parseINDIAN1: " + bankStatementInfo);
+        log.info("Exiting IndianServiceImpl parseINDIAN1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IndianServiceImpl parseINDIAN1 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -100,7 +100,7 @@ public class IndianServiceImpl implements IndianService{
 //			e.printStackTrace();
 			log.error("Error in IndianServiceImpl parseINDIAN2: " + e);
 		}
-		log.info("Exiting IndianServiceImpl parseINDIAN2: " + bankStatementInfo);
+		log.info("Exiting IndianServiceImpl parseINDIAN2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for IndianServiceImpl parseINDIAN2 is ==>" + timeTaken);
 		return bankStatementInfo;

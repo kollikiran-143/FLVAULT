@@ -97,7 +97,7 @@ public class KNBServiceImpl implements KNBService{
         	log.error("Error in KNBServiceImpl parseKNB1: "+e);
         }
         
-        log.info("Exiting KNBServiceImpl parseKNB1: " + bsInfo);
+        log.info("Exiting KNBServiceImpl parseKNB1:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for KNBServiceImpl parseKNB1 is ==>" + timeTaken);
         return bsInfo;
@@ -196,7 +196,7 @@ public class KNBServiceImpl implements KNBService{
         	log.error("Error in KNBServiceImpl parseKNB2: "+e);
         }
         
-        log.info("Exiting KNBServiceImpl parseKNB2: " + bsInfo);
+        log.info("Exiting KNBServiceImpl parseKNB2:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for KNBServiceImpl parseKNB2 is ==>" + timeTaken);
         return bsInfo;
@@ -234,7 +234,7 @@ public class KNBServiceImpl implements KNBService{
 //          	e.printStackTrace();
         	log.error("Error in KNBServiceImpl parseKNB3: "+e);
         }
-        log.info("Exiting KNBServiceImpl parseKNB3: " + bsInfo);
+        log.info("Exiting KNBServiceImpl parseKNB3:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for KNBServiceImpl parseKNB3 is ==>" + timeTaken);
         return bsInfo;
@@ -275,7 +275,7 @@ public class KNBServiceImpl implements KNBService{
 //          	e.printStackTrace();
 			log.error("Error in KNBServiceImpl parseKNB4: " + e);
 		}
-		log.info("Exiting KNBServiceImpl parseKNB4: " + bsInfo);
+		log.info("Exiting KNBServiceImpl parseKNB4:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for KNBServiceImpl parseKNB4 is ==>" + timeTaken);
 		return bsInfo;

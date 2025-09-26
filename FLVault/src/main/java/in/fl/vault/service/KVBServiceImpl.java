@@ -54,7 +54,7 @@ public class KVBServiceImpl implements KVBService{
 			log.error("Error in KVBServiceImpl parseKVB1: ", e);
 		}
 
-		log.info("Exiting KVBServiceImpl parseKVB1: " + bankStatementInfo);
+		log.info("Exiting KVBServiceImpl parseKVB1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for KVBServiceImpl is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -91,7 +91,7 @@ public class KVBServiceImpl implements KVBService{
 			log.error("Error in KVBServiceImpl parseKVB2: "+e);
 		}
 		
-		log.info("Exiting KVBServiceImpl parseKVB2: " + bsInfo);
+		log.info("Exiting KVBServiceImpl parseKVB2:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for KVBServiceImpl parseKVB2 is ==>" + timeTaken);
 		return bsInfo;
@@ -148,7 +148,7 @@ public class KVBServiceImpl implements KVBService{
 //          	e.printStackTrace();
 			log.error("Error in KVBServiceImpl parseKVB3: " + e);
 		}
-		log.info("Exiting KVBServiceImpl parseKVB3: " + bsInfo);
+		log.info("Exiting KVBServiceImpl parseKVB3:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for KVBServiceImpl parseKVB3 is ==>" + timeTaken);
 		return bsInfo;

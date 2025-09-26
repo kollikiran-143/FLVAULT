@@ -52,7 +52,7 @@ public class RBLServiceImpl implements RBLService{
         	log.error("Error in RBLServiceImpl parseRBL1: "+e);
         }
         
-        log.info("Exiting RBLServiceImpl parseRBL1: " + bankStatementInfo);
+        log.info("Exiting RBLServiceImpl parseRBL1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for RBLServiceImpl parseRBL1 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -94,7 +94,7 @@ public class RBLServiceImpl implements RBLService{
 			log.error("Error in RBLServiceImpl parseRBL2: " + e);
 		}
 
-		log.info("Exiting RBLServiceImpl parseRBL2: " + bankStatementInfo);
+		log.info("Exiting RBLServiceImpl parseRBL2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for RBLServiceImpl parseRBL2 is ==>" + timeTaken);
 		return bankStatementInfo;
@@ -131,7 +131,7 @@ public class RBLServiceImpl implements RBLService{
         	log.error("Error in RBLServiceImpl parseRBL3: "+e);
         }
         
-        log.info("Exiting RBLServiceImpl parseRBL3: " + bsInfo);
+        log.info("Exiting RBLServiceImpl parseRBL3:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for RBLServiceImpl parseRBL3 is ==>" + timeTaken);
         return bsInfo;
@@ -160,7 +160,7 @@ public class RBLServiceImpl implements RBLService{
 //			e.printStackTrace();
         	log.error("Error in RBLServiceImpl parseRBL4: "+e);
         }
-        log.info("Exiting RBLServiceImpl parseRBL4: " + bsInfo);
+        log.info("Exiting RBLServiceImpl parseRBL4:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for RBLServiceImpl parseRBL4 is ==>" + timeTaken);
         return bsInfo;

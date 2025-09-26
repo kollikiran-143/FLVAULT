@@ -53,7 +53,7 @@ public class CUBServiceImpl implements CUBService{
 //			e.printStackTrace();
         	log.error("Error in CUBServiceImpl parseCUB1: "+e);
         }
-        log.info("Exiting CUBServiceImpl parseCUB1: " + bankStatementInfo);
+        log.info("Exiting CUBServiceImpl parseCUB1: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CUBServiceImpl parseCUB1 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -89,7 +89,7 @@ public class CUBServiceImpl implements CUBService{
 //			e.printStackTrace();
         	log.error("Error in CUBServiceImpl parseCUB2: "+e);
         }
-        log.info("Exiting CUBServiceImpl parseCUB2: " + bankStatementInfo);
+        log.info("Exiting CUBServiceImpl parseCUB2: " + bankStatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CUBServiceImpl parseCUB2 is ==>" + timeTaken);
         return bankStatementInfo;
@@ -181,7 +181,7 @@ public class CUBServiceImpl implements CUBService{
 //			e.printStackTrace();
         	log.error("Error in CUBServiceImpl parseCUB3: "+e);
         }
-        log.info("Exiting CUBServiceImpl parseCUB3: " + bsInfo);
+        log.info("Exiting CUBServiceImpl parseCUB3:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for CUBServiceImpl parseCUB3 is ==>" + timeTaken);
         return bsInfo;

@@ -125,7 +125,7 @@ public class BOIServiceImpl implements BOIService {
 			log.error("Error in BOIServiceImpl parseBOI1: " + e);
 		}
 
-		log.info("Exiting BOIServiceImpl parseBOI1: " + bsInfo);
+		log.info("Exiting BOIServiceImpl parseBOI1:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for BOIServiceImpl parseBOI1 is: " + timeTaken);
 		return bsInfo;
@@ -160,7 +160,7 @@ public class BOIServiceImpl implements BOIService {
 			log.error("Error in BOIServiceImpl parseSBI2: " + e);
 		}
 
-		log.info("Exiting BOIServiceImpl parseSBI2: " + bankstatementInfo);
+		log.info("Exiting BOIServiceImpl parseSBI2: " + bankstatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for BOIServiceImpl parseSBI2 is: " + timeTaken);
 		return bankstatementInfo;
