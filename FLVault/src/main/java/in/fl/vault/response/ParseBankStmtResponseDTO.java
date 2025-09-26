@@ -20,5 +20,15 @@ public class ParseBankStmtResponseDTO extends BaseResponseDTO{
 				"ParseBankStmtResponseDTO [bankStatements=%s, getStatusCode()=%s, getStatusMessage()=%s, getRandom()=%s]",
 				bankStatements, getStatusCode(), getStatusMessage(), getRandom());
 	}
+	
+	public String printWithoutTrxs() {
+		String bankStmtStr = (bankStatements == null || bankStatements.isEmpty()) 
+		        ? "No bank statements available" 
+		        : bankStatements.get(0).printWithoutTrxs();
+		
+		return String.format(
+				"ParseBankStmtResponseDTO [bankStatements=%s, getStatusCode()=%s, getStatusMessage()=%s, getRandom()=%s]",
+				bankStmtStr, getStatusCode(), getStatusMessage(), getRandom());
+	}
 
 }

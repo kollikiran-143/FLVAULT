@@ -167,4 +167,11 @@ public class BSInfo {
 				startDate, enDate, nominee, stmntFormat, transactions);
 	}
 	
+	public String printWithoutTrxs() {
+		return String.format(
+				"BSInfo [name=%s, phone1=%s, phone2=%s, aadhaar=%s, pan=%s, email=%s, dob=%s, address=%s, accountNo=%s, ifsc=%s, branch=%s, accountType=%s, startDate=%s, enDate=%s, nominee=%s, stmntFormat=%s, transactions=%s]",
+				name, phone1, phone2, aadhaar, pan, email, dob, address, accountNo, ifsc, branch, accountType,
+				startDate, enDate, nominee, stmntFormat, transactions != null ? transactions.size() : 0);
+	}
+	
 }
