@@ -415,6 +415,10 @@ public class StmtServiceImpl implements StmtService {
 						bankStmtInfo = iobService.parseIOB3(request);
 						break;
 					}
+					case "IOB_4": {
+						bankStmtInfo = iobService.parseIOB4(request);
+						break;
+					}
 					case "EQUITAS_1": {
 						bankStmtInfo = equitasService.parseEquitas1(request);
 						break;
