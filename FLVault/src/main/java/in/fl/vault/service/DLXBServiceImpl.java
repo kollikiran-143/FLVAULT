@@ -15,12 +15,12 @@ import in.fl.vault.response.Transaction;
 import in.fl.vault.utils.CommonUtils;
 
 @Service
-public class DLXBServiceImpl implements DLXBService{
+public class DLXBServiceImpl implements DLXBService {
 
 	private final static Logger log = Logger.getLogger(DLXBServiceImpl.class);
 
 	@Override
-	public BSInfo parseDLXB1(ParseBankStmtRequestDTO request){
+	public BSInfo parseDLXB1(ParseBankStmtRequestDTO request) {
 		long startTimeInMillis = System.currentTimeMillis();
 		log.info("Entering DLXBServiceImpl parseDLXB1 with request: " + request);
 
@@ -30,24 +30,18 @@ public class DLXBServiceImpl implements DLXBService{
 		try {
 			String text = CommonUtils.extractTextFromPdf(filePath, "3");
 
-			bankStatementInfo
-					.setName(CommonUtils.extractField(text, "Account\\s*Title\\s*:(.{1,80})").replaceAll("\\s+", " "));
+			bankStatementInfo.setName(CommonUtils.extractField(text, "Account\\s*Title\\s*:(.{1,80})").replaceAll("\\s+", " "));
 			bankStatementInfo.setAccountNo(CommonUtils.extractField(text, "Account\\s*No\\s*:\\s*(\\S*)"));
 			bankStatementInfo.setIfsc(CommonUtils.extractField(text, "IFSC\\s*:\\s*(\\S*)"));
-			bankStatementInfo.setBranch(
-					CommonUtils.extractField(text, "Account\\s*Branch\\s*:(.{1,80})").replaceAll("\\s+", " "));
+			bankStatementInfo.setBranch(CommonUtils.extractField(text, "Account\\s*Branch\\s*:(.{1,80})").replaceAll("\\s+", " "));
 			bankStatementInfo.setEmail(CommonUtils.extractField(text, "Email\\s*:\\s*(\\S*)"));
 			bankStatementInfo.setNominee(CommonUtils.extractField(text, "Nominee\\s*:\\s*(.*)"));
-			bankStatementInfo.setAddress(
-					CommonUtils.extractMultiLinesField(text, "Account\\s*Title.*([\\s\\S]*?)\\n\\s*DATE", 110));
+			bankStatementInfo.setAddress(CommonUtils.extractMultiLinesField(text, "Account\\s*Title.*([\\s\\S]*?)\\n\\s*DATE", 110));
 			String dateFormat = "dd-MMM-yyyy";
-			bankStatementInfo.setStartDate(
-					CommonUtils.dateFormatter(CommonUtils.extractField(text, "Period\\s*:\\s*(\\S*)"), dateFormat));
-			bankStatementInfo.setEnDate(CommonUtils
-					.dateFormatter(CommonUtils.extractField(text, "Period\\s*:.*?To\\s*(\\S*)"), dateFormat));
+			bankStatementInfo.setStartDate(CommonUtils.dateFormatter(CommonUtils.extractField(text, "Period\\s*:\\s*(\\S*)"), dateFormat));
+			bankStatementInfo.setEnDate(CommonUtils.dateFormatter(CommonUtils.extractField(text, "Period\\s*:.*?To\\s*(\\S*)"), dateFormat));
 
-			List<Transaction> transactions = extractTransactionsDLXB_1(filePath, bankStatementInfo.getAccountNo(),
-					dateFormat);
+			List<Transaction> transactions = extractTransactionsDLXB_1(filePath, bankStatementInfo.getAccountNo(), dateFormat);
 			bankStatementInfo.setTransactions(transactions);
 
 		} catch (Exception e) {
@@ -59,7 +53,7 @@ public class DLXBServiceImpl implements DLXBService{
 		log.info("Time Taken for DLXBServiceImpl parseDLXB1 is ==>" + timeTaken);
 		return bankStatementInfo;
 	}
-	
+
 	@Override
 	public BSInfo parseDLXB2(ParseBankStmtRequestDTO request) {
 		long startTimeInMillis = System.currentTimeMillis();
@@ -87,7 +81,9 @@ public class DLXBServiceImpl implements DLXBService{
 
 			bankStatementInfo.setAddress(address);
 
-			List<Transaction> transactions = extractTransactionsDLXB_2(text, bankStatementInfo.getAccountNo());
+			String dateFormat = "dd/MM/yyyy";
+
+			List<Transaction> transactions = extractTransactionsDLXB_2(text, bankStatementInfo.getAccountNo(), dateFormat);
 			bankStatementInfo.setStartDate(transactions.get(0).getTxnDate());
 			bankStatementInfo.setEnDate(transactions.get(transactions.size() - 1).getTxnDate());
 			bankStatementInfo.setTransactions(transactions);
@@ -110,9 +106,8 @@ public class DLXBServiceImpl implements DLXBService{
 //				.matcher(text);
 //		text = matcherRemove.replaceAll("");
 
-		Pattern transactionPattern = Pattern.compile(
-				"^(?!\\s*\\d{2}/\\d{2}/\\d{4})\\s*(.*?)\\s{10,}([\\d,.]+)(Cr|Dr)\\s*(\\d{2}/\\d{2}/\\d{4})([\\s\\S]*?)(\\d{2}/\\d{2}/\\d{4}).*?Balance:\\s*([\\d,.]+)",
-				Pattern.MULTILINE);
+		Pattern transactionPattern = Pattern
+				.compile("^(?!\\s*\\d{2}/\\d{2}/\\d{4})\\s*(.*?)\\s{10,}([\\d,.]+)(Cr|Dr)\\s*(\\d{2}/\\d{2}/\\d{4})([\\s\\S]*?)(\\d{2}/\\d{2}/\\d{4}).*?Balance:\\s*([\\d,.]+)", Pattern.MULTILINE);
 
 		Matcher matcher = transactionPattern.matcher(text);
 
@@ -143,8 +138,7 @@ public class DLXBServiceImpl implements DLXBService{
 		return transactions;
 	}
 
-	private List<Transaction> extractTransactionsDLXB_1(String filePath, String accountNo, String dateFormat)
-			throws IOException {
+	private List<Transaction> extractTransactionsDLXB_1(String filePath, String accountNo, String dateFormat) throws IOException {
 		List<Transaction> transactions = new ArrayList<>();
 		List<String[]> txnRows = CommonUtils.tabulaExtraction(filePath);
 
@@ -183,10 +177,9 @@ public class DLXBServiceImpl implements DLXBService{
 		}
 		return transactions;
 	}
-	
-	
-	private List<Transaction> extractTransactionsDLXB_2(String pdfText, String accountNo) {
-		
+
+	private List<Transaction> extractTransactionsDLXB_2(String pdfText, String accountNo, String dateFormat) {
+
 //		(\d{2}\/\d{2}\/\d{4})(.*)?(\d{2}\/\d{2}\/\d{4}).*?Balance\s*:\s*(-?\d*,?\d*,?\d+\.\d+)
 //		(.*)?(-?\d*,?\d*,?\d+\.\d+)([C\D]r)
 //		(\d{2}\/\d{2}\/\d{4})\s+(\d{2}\/\d{2}\/\d{4})\s+(\S+)
@@ -194,11 +187,11 @@ public class DLXBServiceImpl implements DLXBService{
 //		\s*\*?Closing\s*balance[\s\S]*?\(D\s*D\s*\/M\s*M\s*\/Y\s*Y\s*Y\s*Y\s*.*
 //		DebitCountTotalDebitsCreditsCount
 //		\(DD\/MM\/YYYY\)\(DD\/MM\/YYYY\)
-		
+
 		List<Transaction> transactions = new ArrayList<>();
 		pdfText = pdfText.replaceAll("\\s*\\*?Closing\\s*balance[\\s\\S]*?\\(D\\s*D\\s*\\/M\\s*M\\s*\\/Y\\s*Y\\s*Y\\s*Y\\s*.*", "");
 		try {
-			
+
 			Pattern txnPattern1 = Pattern.compile("(.*)\\s{10}(\\S+)([CD]r)");
 			Pattern txnPattern2 = Pattern.compile("(\\d{2}\\/\\d{2}\\/\\d{4})(.*)?(\\d{2}\\/\\d{2}\\/\\d{4}).*?Balance\\s*:\\s*(\\S+)");
 			Pattern txnPattern3 = Pattern.compile("(\\d{2}\\/\\d{2}\\/\\d{4})\\s+(\\d{2}\\/\\d{2}\\/\\d{4})\\s+(\\S+)");
@@ -206,37 +199,36 @@ public class DLXBServiceImpl implements DLXBService{
 
 			String txnStart = "(DD/MM/YYYY)(DD/MM/YYYY)";
 			Pattern pdfEnd = Pattern.compile("Debit\\s*Count\\s*Total\\s*Debits\\s*Credit\\s*Count");
-			boolean txnstatus= false;
-			
+			boolean txnstatus = false;
+
 			String[] lines = pdfText.split("\\n");
 			int serialNoCount = 1;
-			String dateFormat = "dd/MM/yyyy";
 			Transaction transaction = new Transaction();
-			for (String eachLine: lines) {
+			for (String eachLine : lines) {
 //				System.out.println(eachLine);
 //				eachLine = eachLine.trim();
 				String linewithoutSpace = eachLine.replaceAll("\\s", "");
 				Matcher pdfEndMatcher = pdfEnd.matcher(eachLine);
-				if(linewithoutSpace.contains(txnStart)) {
+				if (linewithoutSpace.contains(txnStart)) {
 					txnstatus = true;
 					continue;
 				}
-				if(pdfEndMatcher.find()) {
+				if (pdfEndMatcher.find()) {
 //					System.out.println(transaction.toString());
-					if(transaction.getAmount() != null) {
+					if (transaction.getAmount() != null) {
 						transactions.add(transaction);
 					}
 					break;
 				}
-				if(txnstatus) {
-					
+				if (txnstatus) {
+
 					Matcher txnMatcher1 = txnPattern1.matcher(eachLine);
 					Matcher txnMatcher2 = txnPattern2.matcher(eachLine);
 					Matcher txnMatcher3 = txnPattern3.matcher(eachLine);
 					Matcher txnMatcher4 = txnPattern4.matcher(eachLine);
-					
-					if(txnMatcher1.find()) {
-						if(transaction.getAmount() != null) {
+
+					if (txnMatcher1.find()) {
+						if (transaction.getAmount() != null) {
 							transaction.setDescription(transaction.getDescription().replaceAll("\\s+", " ").trim());
 							transactions.add(transaction);
 							transaction = new Transaction();
@@ -247,16 +239,16 @@ public class DLXBServiceImpl implements DLXBService{
 						String amount = CommonUtils.cleanAmountString(txnMatcher1.group(2));
 						transaction.setAmount(amount);
 						String type = txnMatcher1.group(3);
-						if(type.equalsIgnoreCase("Dr")) {
+						if (type.equalsIgnoreCase("Dr")) {
 							transaction.setDebit(amount);
 							transaction.setTxnType("DEBIT");
 							transaction.setCredit("");
-						}else if(type.equalsIgnoreCase("Cr")){
+						} else if (type.equalsIgnoreCase("Cr")) {
 							transaction.setCredit(amount);
 							transaction.setTxnType("CREDIT");
 							transaction.setDebit("");
 						}
-					}else if(txnMatcher2.find()) {
+					} else if (txnMatcher2.find()) {
 //						System.out.println(eachLine);
 						transaction.setTxnDate(CommonUtils.dateFormatter(txnMatcher2.group(1), dateFormat));
 						transaction.setValueDate(CommonUtils.dateFormatter(txnMatcher2.group(3), dateFormat));
@@ -264,19 +256,19 @@ public class DLXBServiceImpl implements DLXBService{
 						desc += txnMatcher2.group(2);
 						transaction.setDescription(desc);
 						transaction.setBalance(CommonUtils.cleanAmountString(txnMatcher2.group(4)));
-					}else if(txnMatcher3.find()) {
+					} else if (txnMatcher3.find()) {
 						transaction.setTxnDate(CommonUtils.dateFormatter(txnMatcher3.group(1), dateFormat));
 						transaction.setValueDate(CommonUtils.dateFormatter(txnMatcher3.group(2), dateFormat));
 						transaction.setTxnId(txnMatcher3.group(3));
-					}else if(txnMatcher4.find()) {
+					} else if (txnMatcher4.find()) {
 						String desc = (transaction.getDescription() != null && !transaction.getDescription().equals("")) ? transaction.getDescription() : "";
 						desc += txnMatcher4.group(1);
 						transaction.setDescription(desc);
 						transaction.setTxnId(txnMatcher4.group(2));
-					}else {
+					} else {
 						String desc = (transaction.getDescription() != null && !transaction.getDescription().equals("")) ? transaction.getDescription() : "";
 						desc += eachLine;
-						desc= desc.replaceAll("\\s+", " ").trim();
+						desc = desc.replaceAll("\\s+", " ").trim();
 						transaction.setDescription(desc);
 					}
 				}
@@ -286,4 +278,39 @@ public class DLXBServiceImpl implements DLXBService{
 		}
 		return transactions;
 	}
+
+//	private List<Transaction> extractTransactionsDLXB_2(String pdfText, String accountNo, String dateFormat) {
+//		List<Transaction> transactions = new ArrayList<>();
+//
+//		Pattern pattern = Pattern.compile(
+//				"\\s*(.*?)\\s*([\\d,]+\\.\\d{2})(\\wr)\\n\\s*(\\d{2}\\/\\d{2}\\/\\d{4})\\s+(.*?)\\s+(\\d{2}\\/\\d{2}\\/\\d{4})[\\s\\S]*?\\s+Balance:\\s*([\\d,]+\\.\\d{2})([\\s\\S]*?)(?=(\\s*\\*Closingbalance)|(\\n.*?[\\d,]+\\.\\d{2}\\wr))");
+//		// 1 is desc 2 is amount, 3 is Dr/Cr 4 trx date 5 desc2, 6 value date, 7
+//		// balance, 8 desc 3
+//		Matcher matcher = pattern.matcher(pdfText);
+//		int serialNoCount = 1;
+//
+//		while (matcher.find()) {
+//			Transaction transaction = new Transaction();
+//			transaction.setsNo(String.valueOf(serialNoCount++));
+//			String description = matcher.group(1) + " " + matcher.group(5) + " " + matcher.group(8);
+//			transaction.setDescription(description.replaceAll("\\n", " ").replaceAll("\\s+", " ").trim());
+//			transaction.setAmount(matcher.group(2));
+//			transaction.setTxnDate(CommonUtils.dateFormatter(matcher.group(4), dateFormat));
+//			if (matcher.group(3).equalsIgnoreCase("Dr")) {
+//				transaction.setDebit(transaction.getAmount());
+//				transaction.setCredit("");
+//				transaction.setTxnType("DEBIT");
+//			} else {
+//				transaction.setDebit("");
+//				transaction.setCredit(transaction.getAmount());
+//				transaction.setTxnType("CREDIT");
+//			}
+//			transaction.setValueDate(CommonUtils.dateFormatter(matcher.group(6), dateFormat));
+//			transaction.setBalance(matcher.group(7));
+//			transaction.setAccNo(accountNo);
+//			System.out.println(transaction);
+//			transactions.add(transaction);
+//		}
+//		return transactions;
+//	}
 }
