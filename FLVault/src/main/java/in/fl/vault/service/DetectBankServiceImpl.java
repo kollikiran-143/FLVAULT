@@ -1085,6 +1085,11 @@ public class DetectBankServiceImpl implements DetectBankService {
 		if (matcher.find()) {
 			bankCode = matcher.group(1);
 		}
+		pattern = Pattern.compile("eservice@kvbmail.com");
+		matcher = pattern.matcher(pdfText);
+		if (matcher.find()) {
+			bankCode = "";
+		}
 		log.info("DetectBankServiceImpl extractBankCode bankCode is: " + bankCode);
 		return bankCode;
 	}
