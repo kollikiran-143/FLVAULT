@@ -541,6 +541,11 @@ public class DetectBankServiceImpl implements DetectBankService {
 			if (matcher.find()) {
 				return "BOI_2";
 			}
+			pattern = Pattern.compile("IFSC\\s*:\\s*BKID");
+			matcher = pattern.matcher(pdfText);
+			if (matcher.find()) {
+				return "BOI_3";
+			}
 			break;
 		}
 		// Detect FINCARE

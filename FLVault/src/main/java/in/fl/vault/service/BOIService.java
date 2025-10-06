@@ -7,4 +7,6 @@ public interface BOIService {
 	public BSInfo parseBOI1(ParseBankStmtRequestDTO request);
 
 	public BSInfo parseBOI2(ParseBankStmtRequestDTO request);
+
+	public BSInfo parseBOI3(ParseBankStmtRequestDTO request);
 }

@@ -134,7 +134,7 @@ public class BOIServiceImpl implements BOIService {
 	@Override
 	public BSInfo parseBOI2(ParseBankStmtRequestDTO request) {
 		long startTimeInMillis = System.currentTimeMillis();
-		log.info("Entering BOIServiceImpl parseSBI2 with request: " + request);
+		log.info("Entering BOIServiceImpl parseBOI2 with request: " + request);
 
 		BSInfo bankstatementInfo = new BSInfo();
 		String filepath = request.getFileName();
@@ -157,12 +157,46 @@ public class BOIServiceImpl implements BOIService {
 
 		} catch (Exception e) {
 //			e.printStackTrace();
-			log.error("Error in BOIServiceImpl parseSBI2: " + e);
+			log.error("Error in BOIServiceImpl parseBOI2: " + e);
 		}
 
-		log.info("Exiting BOIServiceImpl parseSBI2: " + bankstatementInfo.printWithoutTrxs());
+		log.info("Exiting BOIServiceImpl parseBOI2: " + bankstatementInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
-		log.info("Time Taken for BOIServiceImpl parseSBI2 is: " + timeTaken);
+		log.info("Time Taken for BOIServiceImpl parseBOI2 is: " + timeTaken);
+		return bankstatementInfo;
+	}
+
+	@Override
+	public BSInfo parseBOI3(ParseBankStmtRequestDTO request) {
+		long startTimeInMillis = System.currentTimeMillis();
+		log.info("Entering BOIServiceImpl parseBOI3 with request: " + request);
+
+		BSInfo bankstatementInfo = new BSInfo();
+		String filepath = request.getFileName();
+
+		try {
+			String text = CommonUtils.extractTextFromPdf(filepath, "8");
+			bankstatementInfo.setName(CommonUtils.extractField(text, "holder\\s*name\\s*:(.*?)\\s*Account").replaceAll("\\s+", " ").trim());
+			bankstatementInfo.setAccountNo(CommonUtils.extractField(text, "Account\\s*number\\s*:\\s*(\\S*)"));
+			bankstatementInfo.setIfsc(CommonUtils.extractField(text, "IFSC\\s*:\\s*(\\S*)"));
+			bankstatementInfo.setBranch(CommonUtils.extractField(text, "Branch\\s*Name\\s*:\\s*(.*)\\n").replaceAll("\\s+", " ").trim());
+			bankstatementInfo.setAddress(CommonUtils.extractMultiLinesField(text, "Date\\s*:.*?\\n([\\s\\S]+?)\\n\\s*Customer\\s*ID", 129, 170));
+
+			String dateFormat = "dd-MM-yyyy";
+			bankstatementInfo.setStartDate(CommonUtils.dateFormatter(CommonUtils.extractField(text, "Transaction\\s*Date\\s*from\\s*:\\s*(\\d{2}-\\d{2}-\\d{4})"), dateFormat));
+			bankstatementInfo.setEnDate(CommonUtils.dateFormatter(CommonUtils.extractField(text, "Transaction\\s*Date.*?to\\s*:\\s*(\\d{2}-\\d{2}-\\d{4})"), dateFormat));
+
+			List<Transaction> transactions = extractTransactionsBOI_3(filepath, bankstatementInfo.getAccountNo(), dateFormat);
+			bankstatementInfo.setTransactions(transactions);
+
+		} catch (Exception e) {
+//			e.printStackTrace();
+			log.error("Error in BOIServiceImpl parseBOI3: " + e);
+		}
+
+		log.info("Exiting BOIServiceImpl parseBOI3: " + bankstatementInfo.printWithoutTrxs());
+		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
+		log.info("Time Taken for BOIServiceImpl parseBOI3 is: " + timeTaken);
 		return bankstatementInfo;
 	}
 
@@ -192,7 +226,7 @@ public class BOIServiceImpl implements BOIService {
 				transaction.setTxnDate(CommonUtils.dateFormatter(data[1], dateFormat));
 				transaction.setDescription(data[3]);
 
-				if (data[4] != null && !data[4].equalsIgnoreCase("") && !data[3].equals("-") && !data[4].equals("0.00")) {
+				if (data[4] != null && !data[4].equalsIgnoreCase("") && !data[4].equals("-") && !data[4].equals("0.00")) {
 					transaction.setAmount(data[4]);
 					transaction.setDebit(data[4]);
 					transaction.setCredit("");
@@ -204,6 +238,50 @@ public class BOIServiceImpl implements BOIService {
 					transaction.setTxnType("CREDIT");
 				}
 				transaction.setBalance(data[6].replaceAll("Cr", ""));
+				transactions.add(transaction);
+			}
+		}
+		return transactions;
+	}
+
+	private List<Transaction> extractTransactionsBOI_3(String fileName, String accountNo, String dateFormat) throws IOException {
+		List<Transaction> transactions = new ArrayList<>();
+		List<String[]> txnRows = CommonUtils.tabulaExtraction(fileName);
+
+		int serialNoCount = 1;
+		if (txnRows != null && !txnRows.isEmpty()) {
+			for (String[] row : txnRows) {
+
+				String line = String.join("|", row);
+				line = line.replaceAll("\\r", " ");
+				line = line.replaceAll("\\s+", " ");
+
+				if (line.trim().isEmpty()) {
+					continue;
+				}
+				// first column is Txn Date, second column is value
+				String[] data = line.split("\\|");
+				if (data.length == 0 || data.length != 6 || data[1].equalsIgnoreCase("Date"))
+					continue;
+
+				Transaction transaction = new Transaction();
+				transaction.setsNo(String.valueOf(serialNoCount++));
+				transaction.setAccNo(accountNo);
+				transaction.setTxnDate(CommonUtils.dateFormatter(data[1], dateFormat));
+				transaction.setDescription(data[2]);
+
+				if (data[3] != null && !data[3].equalsIgnoreCase("") && !data[3].equals("-") && !data[3].equals("0.00")) {
+					transaction.setAmount(data[3]);
+					transaction.setDebit(data[3]);
+					transaction.setCredit("");
+					transaction.setTxnType("DEBIT");
+				} else {
+					transaction.setAmount(data[4]);
+					transaction.setCredit(data[4]);
+					transaction.setDebit("");
+					transaction.setTxnType("CREDIT");
+				}
+				transaction.setBalance(data[5].replaceAll("₹\s*", ""));
 				transactions.add(transaction);
 			}
 		}

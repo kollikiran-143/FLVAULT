@@ -671,6 +671,10 @@ public class StmtServiceImpl implements StmtService {
 						bankStmtInfo = boiService.parseBOI2(request);
 						break;
 					}
+					case "BOI_3": {
+						bankStmtInfo = boiService.parseBOI3(request);
+						break;
+					}
 					case "RBL_1": {
 						bankStmtInfo = rblService.parseRBL1(request);
 						break;
