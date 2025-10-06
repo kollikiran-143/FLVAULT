@@ -981,7 +981,11 @@ public class DetectBankServiceImpl implements DetectBankService {
 			if (matcher.find()) {
 				return "IOB_4";
 			}
-
+			pattern = Pattern.compile("INFT\\s*-\\s*Internal\\s*Fund\\s*Transfer\\s*.*?ICICI\\s*Bank");
+			matcher = pattern.matcher(pdfText);
+			if (matcher.find()) {
+				return "ICICI_5";
+			}
 			break;
 		}
 		}

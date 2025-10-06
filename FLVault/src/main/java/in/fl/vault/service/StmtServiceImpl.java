@@ -575,6 +575,10 @@ public class StmtServiceImpl implements StmtService {
 						bankStmtInfo = iciciService.parseICICI4(request);
 						break;
 					}
+					case "ICICI_5": {
+						bankStmtInfo = iciciService.parseICICI5(request);
+						break;
+					}
 					case "BANDHAN_1": {
 						bankStmtInfo = bandhanService.parseBandhan1(request);
 						break;

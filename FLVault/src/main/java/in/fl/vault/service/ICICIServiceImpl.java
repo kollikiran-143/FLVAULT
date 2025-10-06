@@ -16,10 +16,10 @@ import in.fl.vault.response.Transaction;
 import in.fl.vault.utils.CommonUtils;
 
 @Service
-public class ICICIServiceImpl implements ICICIService{
-	
+public class ICICIServiceImpl implements ICICIService {
+
 	private static final Logger log = Logger.getLogger(StmtServiceImpl.class);
-	
+
 	@Override
 	public BSInfo parseICICI1(ParseBankStmtRequestDTO request) {
 		long startTimeInMillis = System.currentTimeMillis();
@@ -32,14 +32,12 @@ public class ICICIServiceImpl implements ICICIService{
 			String pdfText = CommonUtils.extractTextFromPdf(filepath, "3");
 
 			Pattern patternBranch = Pattern.compile("(.*)Your\\s*Base\\s*Branch\\s*:(.*)([\\s\\S]*?)(?=Visit)");
-			Pattern patternAccount = Pattern
-					.compile("ACCOUNT\\s*TYPE\\s*ACCOUNT\\s*NUMBER.*\\n\\s*(.*?)\\s+(.*?)\\s+(.*?)\\s+(.*?)\\s+(.*)");
+			Pattern patternAccount = Pattern.compile("ACCOUNT\\s*TYPE\\s*ACCOUNT\\s*NUMBER.*\\n\\s*(.*?)\\s+(.*?)\\s+(.*?)\\s+(.*?)\\s+(.*)");
 			Matcher matcherBranch = patternBranch.matcher(pdfText);
 			Matcher matcherAccount = patternAccount.matcher(pdfText);
 
 			String[] date = CommonUtils.extractMultiGroupArray(pdfText, "for\\s*the\\s*period\\s*(.*?)-(.*)");
-			String addressRegion = CommonUtils.extractField(pdfText,
-					"(.*Your\\s*Base\\s*Branch\\s*:[\\s\\S]*?)(?=\s*Did\\s*you\\s*know)");
+			String addressRegion = CommonUtils.extractField(pdfText, "(.*Your\\s*Base\\s*Branch\\s*:[\\s\\S]*?)(?=\s*Did\\s*you\\s*know)");
 
 			String dateFormat = "MMMM dd, yyyy";
 			if (date.length == 2) {
@@ -56,8 +54,7 @@ public class ICICIServiceImpl implements ICICIService{
 				}
 			}
 			bsInfo.setAddress(address.replaceAll("\\s+", " ").trim());
-			bsInfo.setName(
-					CommonUtils.extractField(pdfText, "(.*)\\n?\\s*Your\\s*Base").replaceAll("\\s+", " ").trim());
+			bsInfo.setName(CommonUtils.extractField(pdfText, "(.*)\\n?\\s*Your\\s*Base").replaceAll("\\s+", " ").trim());
 			String branch = "";
 			if (matcherBranch.find()) {
 				String branchlines[] = matcherBranch.group(3).split("\\n");
@@ -86,7 +83,7 @@ public class ICICIServiceImpl implements ICICIService{
 		log.info("Time Taken for ICICIServiceImpl parseICICI1 is ==>" + timeTaken);
 		return bsInfo;
 	}
-	
+
 	@Override
 	public BSInfo parseICICI2(ParseBankStmtRequestDTO request) {
 		long startTimeInMillis = System.currentTimeMillis();
@@ -94,16 +91,15 @@ public class ICICIServiceImpl implements ICICIService{
 
 		BSInfo bsInfo = new BSInfo();
 		String filepath = request.getFileName();
-		
+
 		try {
 			String pdfText = CommonUtils.extractTextFromPdf(filepath, "3");
 			bsInfo.setName(CommonUtils.extractField(pdfText, "Details\\s*With\\s*Us.*\\n(.*)").replaceAll("\\s+", " ").trim());
 			bsInfo.setAddress(CommonUtils.extractMultiLinesField(pdfText, "Details\\s*With\\s*Us.*\\n([\\s\\S]*?)\\n.*Base\\s*Branch", 100));
 			bsInfo.setIfsc(CommonUtils.extractField(pdfText, "IFSC[\\s\\S]*?(ICIC\\w{7})"));
-			
+
 			String dateFormat = "dd-MM-yyyy";
-			String[] accNoPeriod = CommonUtils.extractMultiGroupArray(pdfText,
-					"account\\s*number\\s*:\\s*(\\d*).*period\\s*(\\d{2}-\\d{2}-\\d{4}).*(\\d{2}-\\d{2}-\\d{4})");
+			String[] accNoPeriod = CommonUtils.extractMultiGroupArray(pdfText, "account\\s*number\\s*:\\s*(\\d*).*period\\s*(\\d{2}-\\d{2}-\\d{4}).*(\\d{2}-\\d{2}-\\d{4})");
 			if (accNoPeriod != null) {
 				bsInfo.setAccountNo(accNoPeriod[0]);
 				bsInfo.setStartDate(CommonUtils.dateFormatter(accNoPeriod[1].trim(), dateFormat));
@@ -114,7 +110,7 @@ public class ICICIServiceImpl implements ICICIService{
 //				e.printStackTrace();
 			log.error("Error in ICICIServiceImpl parseICICI2: " + e);
 		}
-		
+
 		log.info("Exiting ICICIServiceImpl parseICICI2:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for ICICIServiceImpl parseICICI2 is ==>" + timeTaken);
@@ -136,16 +132,14 @@ public class ICICIServiceImpl implements ICICIService{
 			bsInfo.setIfsc(CommonUtils.extractField(pdfText, "IFSC\\s*Code\\s*:\\s*(.*)").trim());
 			bsInfo.setAccountNo(CommonUtils.extractField(pdfText, "A/C\\s*No\\s*:\\s*(.*?)\\s{10,}").trim());
 			bsInfo.setName(CommonUtils.extractField(pdfText, "Name\\s*:\\s*(.*)A/C").replaceAll("\\s+", " ").trim());
-			bsInfo.setAddress(CommonUtils.extractMultiLinesField(pdfText,
-					"A/C\\s*\\S*:.*([\\s\\S*]*?)\\n\\s*A/C\\s*No\\s*:", 98));
+			bsInfo.setAddress(CommonUtils.extractMultiLinesField(pdfText, "A/C\\s*\\S*:.*([\\s\\S*]*?)\\n\\s*A/C\\s*No\\s*:", 98));
 			String txndateFormat = "dd-MMM-yyyy";
 			Pattern pattern = Pattern.compile("Period\\s*:\\s*From.*?To\\s*\\d{2}\\/\\d{2}\\/\\d{4}");
 			Matcher matcher = pattern.matcher(pdfText);
 			if (matcher.find()) {
 				txndateFormat = "dd/MMM/yyyy";
 			}
-			List<Transaction> listOfTransactions = extractTransactionsICICI_3(filepath, bsInfo.getAccountNo(),
-					txndateFormat);
+			List<Transaction> listOfTransactions = extractTransactionsICICI_3(filepath, bsInfo.getAccountNo(), txndateFormat);
 			bsInfo.setTransactions(listOfTransactions);
 			bsInfo.setStartDate(listOfTransactions.get(0).getTxnDate());
 			bsInfo.setEnDate(listOfTransactions.get(listOfTransactions.size() - 1).getTxnDate());
@@ -167,46 +161,83 @@ public class ICICIServiceImpl implements ICICIService{
 
 		BSInfo bsInfo = new BSInfo();
 		String filepath = request.getFileName();
-		
+
 		try {
 			String pdfText = CommonUtils.extractTextFromPdf(filepath, "3");
 			Pattern addressEndPattern = Pattern.compile("Base\\s*Branch");
-			
-			String [] lines = pdfText.split("\\n");
+
+			String[] lines = pdfText.split("\\n");
 			int start = 0;
 			String address = "";
 			for (String eachline : lines) {
-				if(start == 0) { start++; continue; }
-				if(start == 1) { bsInfo.setName(eachline.replaceAll("\\s+", " ").trim()); start++; continue; }
+				if (start == 0) {
+					start++;
+					continue;
+				}
+				if (start == 1) {
+					bsInfo.setName(eachline.replaceAll("\\s+", " ").trim());
+					start++;
+					continue;
+				}
 				Matcher addEndMatcher = addressEndPattern.matcher(eachline);
-				if(!addEndMatcher.find()) {
+				if (!addEndMatcher.find()) {
 					address += eachline + " ";
-				}else {
+				} else {
 					break;
 				}
 			}
 			bsInfo.setAddress(address.replaceAll("\\s+", " ").trim());
 			bsInfo.setBranch(CommonUtils.extractField(pdfText, "Branch\\s*:(.*)").replaceAll("\\s+", " ").trim());
 			String[] accTypeNoIfscArr = CommonUtils.extractMultiGroupArray(pdfText, "ACCOUNT\\s*TYPE\\s*ACCOUNT\\s*NUMBER.*IFS\\s*CODE.*\\n\\s*(\\S*)\\s*(\\S*).*(ICIC\\w{7})");
-			if(accTypeNoIfscArr != null) {
+			if (accTypeNoIfscArr != null) {
 				bsInfo.setAccountType(accTypeNoIfscArr[0]);
 				bsInfo.setAccountNo(accTypeNoIfscArr[1]);
 				bsInfo.setIfsc(accTypeNoIfscArr[2]);
 			}
-			
+
 			String dateFormat = "dd-MM-yyyy";
 			List<Transaction> transactions = extractTransactionsICICI_1_4(pdfText, bsInfo.getAccountNo(), dateFormat);
 			bsInfo.setStartDate(transactions.get(0).getTxnDate());
-			bsInfo.setEnDate(transactions.get(transactions.size()-1).getTxnDate());
+			bsInfo.setEnDate(transactions.get(transactions.size() - 1).getTxnDate());
 			bsInfo.setTransactions(transactions);
 		} catch (Exception e) {
 //			e.printStackTrace();
 			log.error("Error in ICICIServiceImpl parseICICI4: " + e);
 		}
-		
+
 		log.info("Exiting ICICIServiceImpl parseICICI4:" + bsInfo.printWithoutTrxs());
 		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
 		log.info("Time Taken for ICICIServiceImpl parseICICI4 is ==>" + timeTaken);
+		return bsInfo;
+	}
+
+	@Override
+	public BSInfo parseICICI5(ParseBankStmtRequestDTO request) {
+		long startTimeInMillis = System.currentTimeMillis();
+		log.info("Entering ICICIServiceImpl parseICICI5 with request: " + request);
+
+		BSInfo bsInfo = new BSInfo();
+		String filepath = request.getFileName();
+
+		try {
+			String pdfText = CommonUtils.extractTextFromPdf(filepath, "5");
+			bsInfo.setAccountNo(CommonUtils.extractField(pdfText, "Account\\s*Number\\s*(\\S*)"));
+			bsInfo.setName(CommonUtils.extractField(pdfText, "Account\\s*Number.*?-\\s*(.*)\\n").replaceAll("\\s+", " ").trim());
+
+			String dateFormat = "dd/MM/yyyy";
+			bsInfo.setStartDate(CommonUtils.dateFormatter(CommonUtils.extractField(pdfText, "Transaction\\s*Date*from\\s*(\\d{2}\\/\\d{2}\\/\\d{4})"), dateFormat));
+			bsInfo.setEnDate(CommonUtils.dateFormatter(CommonUtils.extractField(pdfText, "Transaction\\s*Date*from.*?to\\s*(\\d{2}\\/\\d{2}\\/\\d{4})"), dateFormat));
+
+			List<Transaction> transactions = extractTransactionsICICI_5(pdfText, bsInfo.getAccountNo(), dateFormat);
+			bsInfo.setTransactions(transactions);
+		} catch (Exception e) {
+//				e.printStackTrace();
+			log.error("Error in ICICIServiceImpl parseICICI5: " + e);
+		}
+
+		log.info("Exiting ICICIServiceImpl parseICICI5:" + bsInfo.printWithoutTrxs());
+		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
+		log.info("Time Taken for ICICIServiceImpl parseICICI5 is ==>" + timeTaken);
 		return bsInfo;
 	}
 
@@ -229,19 +260,49 @@ public class ICICIServiceImpl implements ICICIService{
 		Matcher matcher2 = pattern2.matcher(dateStr[0]);
 		return matcher1.find() && matcher2.find();
 	}
-	
+
+	private List<Transaction> extractTransactionsICICI_5(String pdfText, String accountNo, String dateFormat) throws IOException {
+		List<Transaction> transactions = new ArrayList<>();
+
+		Pattern pattern = Pattern.compile(
+				"(\\d{2}\\/\\d{2}\\/\\d{4})\\s+(\\d{2}\\/\\d{2}\\/\\d{4})\\s*(.*?)\\s*([\\d,]+\\.\\d{2})\\s+([\\d,]+\\.\\d{2})\\s+([\\d,]+\\.\\d{2})([\\s\\S]+?)(?=(Legends\\s*Used)|(\\d{2}\\/\\d{2}\\/\\d{4})\\s+(\\d{2}\\/\\d{2}\\/\\d{4}))");
+		Matcher matcher = pattern.matcher(pdfText);
+		int serialNoCount = 1;
+
+		while (matcher.find()) {
+			Transaction transaction = new Transaction();
+			transaction.setsNo(String.valueOf(serialNoCount++));
+			transaction.setValueDate(CommonUtils.dateFormatter(matcher.group(1), dateFormat));
+			transaction.setTxnDate(CommonUtils.dateFormatter(matcher.group(2), dateFormat));
+			String description = (matcher.group(3) + " " + matcher.group(7)).replaceAll("\\d+\\s{20}", " ");
+			transaction.setDescription(description.replaceAll("\\n", " ").replaceAll("\\s+", " ").trim());
+			if (!matcher.group(4).equals("0.00") && !matcher.group(4).equals("-")) { // Debit
+				transaction.setAmount(matcher.group(4));
+				transaction.setDebit(transaction.getAmount());
+				transaction.setCredit("");
+				transaction.setTxnType("DEBIT");
+			} else {
+				transaction.setAmount(matcher.group(5));
+				transaction.setDebit("");
+				transaction.setCredit(transaction.getAmount());
+				transaction.setTxnType("CREDIT");
+			}
+			transaction.setBalance(matcher.group(6));
+			transaction.setAccNo(accountNo);
+			transactions.add(transaction);
+		}
+		return transactions;
+	}
+
 	private List<Transaction> extractTransactionsICICI_1_4(String pdfText, String accountNo, String dateFormat) throws IOException {
 		List<Transaction> transactions = new ArrayList<>();
 		pdfText = pdfText.replaceAll(".*Page[\\s\\S]*?BALANCE", "");
 
-        Pattern patternremove = Pattern.compile("(^\\s{20,}TOTAL[\\s\\S]?BALANCE\\n)(?=^\\s*\\d{2}-\\d{2}-\\d{4})",
-                Pattern.MULTILINE);
-        Matcher matcherremove = patternremove.matcher(pdfText);
-        pdfText = matcherremove.replaceAll("");
-		
-		Pattern patternTxn = Pattern.compile(
-				"(^\\s*\\d{2}-\\d{2}-\\d{4}.*[\\s\\S]*?)(?=^\\s*TOTAL|^\\s*Total|\\s*\\d{2}-\\d{2}-\\d{4})",
-				Pattern.MULTILINE);
+		Pattern patternremove = Pattern.compile("(^\\s{20,}TOTAL[\\s\\S]?BALANCE\\n)(?=^\\s*\\d{2}-\\d{2}-\\d{4})", Pattern.MULTILINE);
+		Matcher matcherremove = patternremove.matcher(pdfText);
+		pdfText = matcherremove.replaceAll("");
+
+		Pattern patternTxn = Pattern.compile("(^\\s*\\d{2}-\\d{2}-\\d{4}.*[\\s\\S]*?)(?=^\\s*TOTAL|^\\s*Total|\\s*\\d{2}-\\d{2}-\\d{4})", Pattern.MULTILINE);
 		Matcher matcher = patternTxn.matcher(pdfText);
 		String firstLine = "";
 
@@ -258,16 +319,14 @@ public class ICICIServiceImpl implements ICICIService{
 			if (i == 0) {
 				i++;
 //				System.out.println(lines[0]);
-				if(lines.length==1)
-				{
+				if (lines.length == 1) {
 					continue;
 				}
 				firstLine = lines[1].trim();
 				continue;
 			}
 			description = firstLine;
-			if(lines[0].isEmpty())
-			{
+			if (lines[0].isEmpty()) {
 				lines = Arrays.copyOfRange(lines, 1, lines.length);
 			}
 			for (int j = 0; j < lines.length; j++) {
@@ -288,12 +347,12 @@ public class ICICIServiceImpl implements ICICIService{
 			}
 			if (lines.length == 1) {
 				firstLine = "";
-			} 
-			
+			}
+
 			if (lines[0].substring(25, 88).trim().equalsIgnoreCase("B/F")) {
-                continue;
-            }
-            balance = balance.replaceAll("[()]", "");
+				continue;
+			}
+			balance = balance.replaceAll("[()]", "");
 			transaction.setsNo(String.valueOf(serialCount++));
 			transaction.setAccNo(accountNo);
 			transaction.setTxnDate(CommonUtils.dateFormatter(txnDate, dateFormat));
@@ -318,16 +377,16 @@ public class ICICIServiceImpl implements ICICIService{
 	private List<Transaction> extractTransactionsICICI_2(String filePath, String accountNo, String dateFormat) throws IOException {
 		List<Transaction> transactions = new ArrayList<>();
 		List<String[]> txnRows = CommonUtils.tabulaExtraction(filePath);
-		
+
 		int serialNoCount = 1;
-		if(txnRows != null && !txnRows.isEmpty()) {
+		if (txnRows != null && !txnRows.isEmpty()) {
 			for (String[] row : txnRows) {
 				String line = String.join("|", row).replaceAll("\\s+", " ");
 				if (line.trim().isEmpty() || line.contains("B/F")) {
 					continue;
 				}
 				String[] data = line.split("\\|");
-				
+
 				if (data.length == 8 && !data[0].equalsIgnoreCase("Date")) {
 					Transaction transaction = new Transaction();
 					transaction.setsNo(Integer.toString(serialNoCount++));
@@ -345,7 +404,7 @@ public class ICICIServiceImpl implements ICICIService{
 						transaction.setDebit("");
 						transaction.setTxnType("CREDIT");
 					}
-					transaction.setBalance(data[7].replace("Cr", "").trim()); 
+					transaction.setBalance(data[7].replace("Cr", "").trim());
 					transaction.setAccNo(accountNo);
 					transactions.add(transaction);
 				}
@@ -354,8 +413,7 @@ public class ICICIServiceImpl implements ICICIService{
 		return transactions;
 	}
 
-	private List<Transaction> extractTransactionsICICI_3(String filePath, String accountNo, String txnDateFormat)
-			throws IOException {
+	private List<Transaction> extractTransactionsICICI_3(String filePath, String accountNo, String txnDateFormat) throws IOException {
 		List<Transaction> transactions = new ArrayList<>();
 		List<String[]> txnRows = CommonUtils.tabulaExtraction(filePath);
 
