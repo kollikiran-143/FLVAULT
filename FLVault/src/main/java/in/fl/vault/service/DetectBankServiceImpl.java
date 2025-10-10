@@ -133,6 +133,11 @@ public class DetectBankServiceImpl implements DetectBankService {
 				if (matcher1.find()) {
 					return "TMB_6";
 				}
+				Pattern pattern2 = Pattern.compile("\\n\\s*\\d{2}-[A-Za-z]{3}-.*\\n\\s+\\d{4}\\s+");
+				Matcher matcher2 = pattern2.matcher(pdfText);
+				if (matcher2.find()) {
+					return "TMB_8";
+				}
 				return "TMB_2";
 			}
 			pattern = Pattern.compile("IFSC\\s{3,}:\\s*TMBL\\w{7}");
@@ -990,6 +995,11 @@ public class DetectBankServiceImpl implements DetectBankService {
 			matcher = pattern.matcher(pdfText);
 			if (matcher.find()) {
 				return "ICICI_5";
+			}
+			pattern = Pattern.compile("Jana\\s*S\\s*m\\s*all\\s*Finan\\s*ce\\s*Ba\\s*nk\\s*Ltd");
+			matcher = pattern.matcher(pdfText);
+			if (matcher.find()) {
+				return "JANA_1";
 			}
 			break;
 		}

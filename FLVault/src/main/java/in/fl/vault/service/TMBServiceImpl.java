@@ -658,6 +658,65 @@ public class TMBServiceImpl implements TMBService {
 		return bsInfo;
 	}
 
+	public BSInfo parseTMB8(ParseBankStmtRequestDTO request) {
+		long startTimeInMillis = System.currentTimeMillis();
+		log.info("Entering TMBServiceImpl parseTMB8 with request: " + request);
+
+		String filePath = request.getFileName();
+		BSInfo bankStatementInfo = new BSInfo();
+		try {
+			String pdfText = CommonUtils.extractTextFromPdf(filePath, "4");
+
+			bankStatementInfo.setName(CommonUtils.extractField(pdfText, "Name\\s*(.*?)\\s*Branch\\s*Code").replaceAll("\\s+", " ").trim());
+			bankStatementInfo.setAccountNo(CommonUtils.extractField(pdfText, "account\\s*number\\s*(\\S*)"));
+			bankStatementInfo.setIfsc(CommonUtils.extractField(pdfText, "IFSC\\s*Code\\s*(\\S*)"));
+			bankStatementInfo.setAccountType(CommonUtils.extractField(pdfText, "A\\/c\\s*Type\\s*(.*?)\\s*IFSC").replaceAll("\\s+", " ").trim());
+			bankStatementInfo.setAddress(CommonUtils.extractMultiLinesField(pdfText, "Branch\\s*Name.*\\n([\\s\\S]+?)\\n\\s*A\\/c\\s*Type", 70));
+
+			List<Transaction> transactions = extractTransactionsTMB_8(pdfText, bankStatementInfo.getAccountNo(), "dd-MMM-yyyy");
+			bankStatementInfo.setTransactions(transactions);
+			bankStatementInfo.setStartDate(transactions.get(0).getTxnDate());
+			bankStatementInfo.setEnDate(transactions.get(transactions.size() - 1).getTxnDate());
+		} catch (Exception e) {
+//          e.printStackTrace();
+			log.error("Error in TMBServiceImpl parseTMB8: " + e);
+		}
+		log.info("Exiting TMBServiceImpl parseTMB8: " + bankStatementInfo.printWithoutTrxs());
+		long timeTaken = System.currentTimeMillis() - startTimeInMillis;
+		log.info("Time Taken for TMBServiceImpl parseTMB8 is ==>" + timeTaken);
+		return bankStatementInfo;
+	}
+
+	private List<Transaction> extractTransactionsTMB_8(String pdfText, String accountNo, String dateFormat) throws IOException {
+		List<Transaction> transactions = new ArrayList<>();
+
+		Pattern pattern = Pattern.compile("(\\d{2}-\\w{3}-)\\s*(.*?)\\n\\s+(\\d{4})\\s*(.*?)\\s+([\\d,]+\\.\\d{2})(\\s+)([\\d,]+\\.\\d{2})");
+		Matcher matcher = pattern.matcher(pdfText);
+		int serialNoCount = 1;
+
+		while (matcher.find()) {
+			Transaction transaction = new Transaction();
+			transaction.setsNo(String.valueOf(serialNoCount++));
+			transaction.setTxnDate(CommonUtils.dateFormatter(matcher.group(1) + matcher.group(3), dateFormat));
+			String description = matcher.group(2) + " " + matcher.group(4);
+			transaction.setDescription(description.replaceAll("\\n", " ").replaceAll("\\s+", " ").trim());
+			transaction.setAmount(matcher.group(5));
+			if (matcher.group(6).length() > 25) {
+				transaction.setDebit(transaction.getAmount());
+				transaction.setCredit("");
+				transaction.setTxnType("DEBIT");
+			} else {
+				transaction.setDebit("");
+				transaction.setCredit(transaction.getAmount());
+				transaction.setTxnType("CREDIT");
+			}
+			transaction.setBalance(matcher.group(7));
+			transaction.setAccNo(accountNo);
+			transactions.add(transaction);
+		}
+		return transactions;
+	}
+
 	private String[] extractAddressTMB_3(String text) {
 		Pattern pattern = Pattern.compile("TRANSACTIONS\\s*([\\s\\S]*?)\\s*(?=Email)", Pattern.DOTALL);
 		Matcher matcher = pattern.matcher(text);

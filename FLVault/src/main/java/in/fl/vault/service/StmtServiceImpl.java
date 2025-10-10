@@ -106,6 +106,8 @@ public class StmtServiceImpl implements StmtService {
 	@Autowired
 	private SURYService suryService;
 	@Autowired
+	private JANAService janaService;
+	@Autowired
 	private AwsS3Service awsS3Service;
 	@Autowired
 	private FlvaultAuditRepository flvaultAuditRepository;
@@ -269,6 +271,10 @@ public class StmtServiceImpl implements StmtService {
 					}
 					case "TMB_7": {
 						bankStmtInfo = tmbService.parseTMB7(request);
+						break;
+					}
+					case "TMB_8": {
+						bankStmtInfo = tmbService.parseTMB8(request);
 						break;
 					}
 					case "IDFC_1": {
@@ -761,6 +767,10 @@ public class StmtServiceImpl implements StmtService {
 					}
 					case "SURY_1": {
 						bankStmtInfo = suryService.parseSURY1(request);
+						break;
+					}
+					case "JANA_1": {
+						bankStmtInfo = janaService.parseJANA1(request);
 						break;
 					}
 					default:

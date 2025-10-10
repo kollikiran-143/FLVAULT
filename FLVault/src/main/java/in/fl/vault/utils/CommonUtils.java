@@ -321,6 +321,9 @@ public class CommonUtils {
 		case "ESMF": {
 			return "ESAF Small Finance Bank";
 		}
+		case "JANA": {
+			return "Jana Small Finance Bank";
+		}
 		default: {
 			log.warn("CommonUtils getBankName: Bankformat Key Doesn't Exist. " + bankFormat);
 			return "";
